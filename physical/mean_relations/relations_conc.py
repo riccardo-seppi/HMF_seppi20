@@ -66,10 +66,9 @@ path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits'),os
 
 dir_0_4 = '/data17s/darksim/simulation_3/MD/MD_0.4Gpc/Mass_Xoff_Concentration'
 path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits')
+
 fig0,ax0 = plt.subplots(1,1,figsize=(10,10))
-fig1,ax1 = plt.subplots(1,1,figsize=(10,10))
-fig2,ax2 = plt.subplots(1,1,figsize=(10,10))
-fig3,ax3 = plt.subplots(1,1,figsize=(10,10))
+
 zpl = np.array([1/1.0-1, 1/0.6565-1, 1/0.4922-1, 1/0.4123-1])
 colors = ['b','r','c','m']
 
@@ -226,11 +225,11 @@ for i, p2s in enumerate(path_2_snapshot_data):
     peak_array_3 = np.array(peak_array[ind_three])
     z3_ = np.array(z3[ind_three])
 
-    ax0.scatter(peak_array_1,conc_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=18)
+    ax0.scatter(peak_array_1,conc_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=100)
 
-    ax0.scatter(peak_array_2,conc_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=18)
+    ax0.scatter(peak_array_2,conc_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=100)
 
-    ax0.scatter(peak_array_3,conc_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=18)
+    ax0.scatter(peak_array_3,conc_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=100)
     peak_array_ = np.hstack((peak_array_1,peak_array_2,peak_array_3))
     conc_av_ = np.hstack((conc_av_1,conc_av_2,conc_av_3))
     conc_err_ = np.hstack((conc_err_1,conc_err_2,conc_err_3))
@@ -320,8 +319,8 @@ def Xoff_log(x):
     y = 10**x
     return y/h
 
-ax0.set_ylabel(r'$conc$', fontsize=20)
-ax0.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=20)
+ax0.set_ylabel(r'$conc$', fontsize=25)
+ax0.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=25)
 ax0.grid(True)
 ax0.set_xscale('log')
 ax0.set_yscale('log')
@@ -333,8 +332,8 @@ ax0.xaxis.set_major_formatter(ScalarFormatter())
 ax0.yaxis.set_major_formatter(ScalarFormatter())
 ax0.ticklabel_format(axis='both', style='plain')
 
-ax0.legend(fontsize=12)
-ax0.tick_params(labelsize=15)
+ax0.legend(fontsize=16)
+ax0.tick_params(labelsize=20)
 fig0.tight_layout()
 outfi0 = os.path.join(this_dir,'figures','relation_c_sigma.png')
 os.makedirs(os.path.dirname(outfi0), exist_ok=True)

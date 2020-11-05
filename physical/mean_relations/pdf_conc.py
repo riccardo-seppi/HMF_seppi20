@@ -67,23 +67,12 @@ path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits'),os
 
 dir_0_4 = '/data17s/darksim/simulation_3/MD/MD_0.4Gpc/Mass_Xoff_Concentration'
 path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits')
-fig,ax = plt.subplots(1,2,figsize=(20,10))
-fig1,ax1 = plt.subplots(1,2,figsize=(20,10))
+
 zpl = np.array([1/1.0-1, 1/0.6565-1, 1/0.4922-1, 1/0.4123-1])
 colors = ['b','r','c','m']
 
 #define arrays used to cut data: low resolution of HMD or low statistic of MDPL 
 
-
-def lognormal(x, x0, sigma):
-    return np.log10(1/np.sqrt(2*np.pi*sigma**2)*np.exp(-(np.log10(x/x0))**2/(2*sigma**2)))
-
-def lognormallog(x, x0, sigma):
-    x=10**x
-    return np.log10(1/np.sqrt(2*np.pi*sigma**2)*np.exp(-(np.log10(x/x0))**2/(2*sigma**2)))
-
-def lognormalA(x, A, x0, sigma):
-    return A*np.exp(-(np.log10(x/x0))**2/(2*sigma**2))
 
 def modified_sch(x,A,alpha,beta,x0):
     f = (x/x0)**(alpha)*np.exp(-(x/x0)**beta)
@@ -116,7 +105,7 @@ def double_schechter(data,A,alpha0,beta0,x0,alpha1,beta1,y0,e0,e1,e2,e3,e4,e5,x1
 
 
 print('HMD')
-aexp = float(os.path.basename(path_2_snapshot_data[3][:-5]).split('_')[1])
+aexp = float(os.path.basename(path_2_snapshot_data[0][:-5]).split('_')[1])
 z_snap = 1/aexp -1
 print('z=%.3g'%(z_snap))
 cosmo = cosmology.setCosmology('multidark-planck')    
@@ -126,7 +115,7 @@ dc = peaks.collapseOverdensity(z = z_snap)
 rho_m = cosmo.rho_m(z=z_snap)*1e9
 h = cosmo.Hz(z=0)/100
 
-hd1 = fits.open(path_2_snapshot_data[3])
+hd1 = fits.open(path_2_snapshot_data[0])
 mass1=hd1[1].data['Mvir']
 logmass1 = np.log10(mass1)
 R_1 = peaks.lagrangianR(mass1)
@@ -144,10 +133,10 @@ print('max = ',max(log1_sigf_1))
 #sys.exit()
 print('computing spinparameter pdf...')
 
-#log1sig_intervals = [-0.15, -0.11,  -0.08, -0.01,  0.07, 0.20, 0.4]
+log1sig_intervals = [-0.15, -0.11,  -0.08, -0.01,  0.07, 0.20, 0.4]
 #log1sig_intervals = [-0.1, 0.08,  0.11, 0.14,  0.19, 0.22, 0.44]
 #log1sig_intervals = [-0.05, 0.13,  0.16, 0.2,  0.25, 0.28, 0.48]
-log1sig_intervals = [0.1, 0.18,  0.2, 0.23, 0.27, 0.3, 0.52]
+#log1sig_intervals = [0.1, 0.18,  0.2, 0.23, 0.27, 0.3, 0.52]
 sig_intervals = 1/(10**np.array(log1sig_intervals))
 sig_bins = (sig_intervals[1:] + sig_intervals[:-1])/2
 R_intervals = cosmo.sigma(sig_intervals, z=z_snap,inverse=True)
@@ -192,6 +181,16 @@ index_conc3 = (pdf_conc3 > -4)
 index_conc4 = (pdf_conc4 > -4)
 index_conc5 = (pdf_conc5 > -4)
 
+#fit pdf conc
+popt_conc, pcov_conc = curve_fit(modified_sch,bins_conc,pdf_conc,sigma=yerr_conc,p0=[(1,1.,1,1)],maxfev=1000000)#,maxfev=100000)#,p0=[(1e-3,4.,0.6,1e-3)])   
+print('popt_pdf conc = ', popt_conc)
+model_pdf_conc = modified_sch(bins_conc,*popt_conc)
+chi2conc = np.sum((pdf_conc-model_pdf_conc)**2/(yerr_conc)**2)
+dofconc = len(pdf_conc)-5
+print('chi2 conc = ',chi2conc)
+print('dof conc = ',dofconc)
+chi2rc=chi2conc/dofconc
+print('chi2r conc = ',chi2rc)
 
 
 #simulatenous fit of conc
@@ -230,21 +229,6 @@ tab_sch_conc_list.write(outschc_list,overwrite=True)
 
 plt.figure(figsize=(16,8))
 plt.plot(bins_conc,model_pdf_conc,label='mod sch - full sample')
-#plt.scatter(bins_conc,pdf_conc, label = r'HMD', ls ='None', marker='o')
-plt.fill_between(bins_conc,pdf_conc - yerr_conc,pdf_conc + yerr_conc, alpha=0.5, label = r'HMD')
-plt.tick_params(labelsize=20)
-plt.grid(True)
-plt.legend(fontsize=15)
-plt.xlabel(r'$c = R_{vir}/R_s$',fontsize=25)
-plt.ylabel(r'$P(c)$',fontsize=25)
-plt.title('z = %.3g'%(z_snap), fontsize=25)
-plt.tight_layout()
-outpl = os.path.join(this_dir,'figures','pdf_conc_HMD_z_%.3g.png'%(z_snap))
-os.makedirs(os.path.dirname(outpl), exist_ok=True)
-plt.savefig(outpl, overwrite=True)
-
-plt.figure(figsize=(16,8))
-plt.plot(bins_conc,model_pdf_conc,label='mod sch - full sample')
 plt.scatter(bins_conc,pdf_conc, label = r'HMD', ls ='None', marker='o')
 plt.fill_between(bins_conc,pdf_conc0-yerr_conc0+0.3,pdf_conc0+yerr_conc0+0.3, label = r'$M_\odot \leq %.3g$'%(M_intervals[1]), alpha=0.5)
 plt.plot(bins_conc,modified_sch_list([bins_conc,sig_bins[0]],*popt_pdf_conc_list)+0.3)
@@ -259,12 +243,12 @@ plt.plot(bins_conc,modified_sch_list([bins_conc,sig_bins[4]],*popt_pdf_conc_list
 plt.fill_between(bins_conc,pdf_conc5-yerr_conc5-0.2,pdf_conc5+yerr_conc5-0.2, label = r'$M_\odot > %.3g$'%(M_intervals[5]),alpha=0.5)
 plt.plot(bins_conc,modified_sch_list([bins_conc,sig_bins[5]],*popt_pdf_conc_list)-0.2)
 plt.ylim(bottom=-2.6,top=-1.2)
-plt.tick_params(labelsize=20)
+plt.tick_params(labelsize=28)
 plt.grid(True)
-plt.legend(fontsize=15)
-plt.xlabel(r'$c = R_{vir}/R_s$',fontsize=25)
-plt.ylabel(r'$\log_{10}P(c)+C_0$',fontsize=25)
-plt.title('z = 1.43', fontsize=25)
+plt.legend(fontsize=22)
+plt.xlabel(r'$c = R_{vir}/R_s$',fontsize=30)
+plt.ylabel(r'$\log_{10}P(c)+C_0$',fontsize=30)
+plt.title('z = 0.00', fontsize=32)
 plt.tight_layout()
 outpl = os.path.join(this_dir,'figures','pdf_conc_HMD_slices_z_%.3g.png'%(z_snap))
 os.makedirs(os.path.dirname(outpl), exist_ok=True)
