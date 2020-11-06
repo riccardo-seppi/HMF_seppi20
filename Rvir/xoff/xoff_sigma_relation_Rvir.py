@@ -224,27 +224,28 @@ for i, p2s in enumerate(path_2_snapshot_data):
 
 #computing averages on each cube
     xoff_err1 = xoff_std1/np.sqrt(xoff_N1)
-
     ind_one = ((peak_array > cuts_HMD_low[i]) & (~np.isnan(xoff_av1)) & (xoff_N1 > 100))
     peak_array_1 = np.array(peak_array[ind_one])
     z1_ = np.array(z1[ind_one])
     xoff_av_1 = np.array(xoff_av1[ind_one])
-    #xoff_err_ = 10*np.array(xoff_err[~np.isnan(xoff_av)])
-    xoff_err_1 = 0.1*xoff_av_1
-    xoff_err2 = xoff_std2/np.sqrt(xoff_N2)
+    xoff_err_1 = 1/np.log(10)*xoff_err1[ind_one]/10**xoff_av_1
+#    xoff_err_1 = 0.1*xoff_av_1
 
+    xoff_err2 = xoff_std2/np.sqrt(xoff_N2)
     ind_two = ((peak_array > cuts_BigMD_low[i]) & (peak_array < cuts_BigMD_up[i]) & (~np.isnan(xoff_av2))& (xoff_N2 > 100))
     peak_array_2 = np.array(peak_array[ind_two])
     z2_ = np.array(z2[ind_two])
     xoff_av_2 = np.array(xoff_av2[ind_two])
-    xoff_err_2 = 0.1*xoff_av_2
-    xoff_err3 = xoff_std3/np.sqrt(xoff_N3)
+    xoff_err_2 = 1/np.log(10)*xoff_err2[ind_two]/10**xoff_av_2
+#    xoff_err_2 = 0.1*xoff_av_2
 
+    xoff_err3 = xoff_std3/np.sqrt(xoff_N3)
     ind_three = ((peak_array > cuts_MDPL_low[i]) & (peak_array < cuts_MDPL_up[i]) & (~np.isnan(xoff_av3)) & (xoff_N3 > 100))
     peak_array_3 = np.array(peak_array[ind_three])
     z3_ = np.array(z3[ind_three])
     xoff_av_3 = np.array(xoff_av3[ind_three])
-    xoff_err_3 = 0.1*xoff_av_3
+    xoff_err_3 = 1/np.log(10)*xoff_err3[ind_three]/10**xoff_av_3
+#    xoff_err_3 = 0.1*xoff_av_3
 
     ax1.scatter(peak_array_1,xoff_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=100)
 
@@ -363,7 +364,7 @@ ax1.ticklabel_format(axis='both', style='plain')
 
 #ax1_sec.ticklabel_format(axis='x', style='plain')
 #ax1_sec2.ticklabel_format(axis='y', style='plain')
-ax1.legend(fontsize=20)
+ax1.legend(fontsize=17)
 ax1.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=30)
 ax1.set_ylabel(r'$\log_{10}X_{off}$', fontsize=30)
 #ax1_sec2.set_ylabel(r'$X_{off}\ [kpc]$', fontsize=20, labelpad=15)
@@ -378,6 +379,29 @@ outfi1 = os.path.join(this_dir,'figures','relation_xoff_sigma_Rvir.png')
 os.makedirs(os.path.dirname(outfi1), exist_ok=True)
 fig1.savefig(outfi1, overwrite=True)
 
+
+#make fill between plot 
+z_arr = np.unique(z_full)
+plt.figure(0,(10,10))
+
+for red in z_arr:
+    sel = (z_full==red)
+    peak = peak_array_full[sel]
+    y = xoff_full[sel]
+    dy = xoff_err_full[sel]    
+    plt.fill_between(peak,y-dy,y+dy,color='%.c'%(colors[k]))
+plt.grid(True)
+plt.xscale('log')
+plt.xticks([0.6,0.8,1,2,3,4])
+plt.gca().xaxis.set_major_formatter(ScalarFormatter())
+plt.gca().yaxis.set_major_formatter(ScalarFormatter())
+plt.gca().ticklabel_format(axis='both', style='plain')
+plt.legend(fontsize=17)
+plt.xlabel(r'$\nu = \delta_c/\sigma$', fontsize=30)
+plt.ylabel(r'$\log_{10}X_{off}$', fontsize=30)
+plt.tick_params(labelsize=25)
+plt.tight_layout()
+outf=os.path.join(this_dir,'figures','relation_xoff_sigma_Rvir_err.png')
 print(popt1)
 
 sys.exit()
