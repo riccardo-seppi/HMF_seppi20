@@ -16,6 +16,8 @@ import sys
 import os, glob
 import time
 from astropy.cosmology import FlatLambdaCDM
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter
 import astropy.units as u
@@ -379,29 +381,6 @@ outfi1 = os.path.join(this_dir,'figures','relation_xoff_sigma_Rvir.png')
 os.makedirs(os.path.dirname(outfi1), exist_ok=True)
 fig1.savefig(outfi1, overwrite=True)
 
-
-#make fill between plot 
-z_arr = np.unique(z_full)
-plt.figure(0,(10,10))
-
-for red in z_arr:
-    sel = (z_full==red)
-    peak = peak_array_full[sel]
-    y = xoff_full[sel]
-    dy = xoff_err_full[sel]    
-    plt.fill_between(peak,y-dy,y+dy,color='%.c'%(colors[k]))
-plt.grid(True)
-plt.xscale('log')
-plt.xticks([0.6,0.8,1,2,3,4])
-plt.gca().xaxis.set_major_formatter(ScalarFormatter())
-plt.gca().yaxis.set_major_formatter(ScalarFormatter())
-plt.gca().ticklabel_format(axis='both', style='plain')
-plt.legend(fontsize=17)
-plt.xlabel(r'$\nu = \delta_c/\sigma$', fontsize=30)
-plt.ylabel(r'$\log_{10}X_{off}$', fontsize=30)
-plt.tick_params(labelsize=25)
-plt.tight_layout()
-outf=os.path.join(this_dir,'figures','relation_xoff_sigma_Rvir_err.png')
 print(popt1)
 
 sys.exit()
