@@ -249,11 +249,11 @@ for i, p2s in enumerate(path_2_snapshot_data):
     xoff_err_3 = 1/np.log(10)*xoff_err3[ind_three]/10**xoff_av_3
 #    xoff_err_3 = 0.1*xoff_av_3
 
-    ax1.scatter(peak_array_1,xoff_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=20)
+    ax1.scatter(peak_array_1,xoff_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=13)
 
-    ax1.scatter(peak_array_2,xoff_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=20)
+    ax1.scatter(peak_array_2,xoff_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=13)
 
-    ax1.scatter(peak_array_3,xoff_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=20)
+    ax1.scatter(peak_array_3,xoff_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=13)
 
 
     peak_array_ = np.hstack((peak_array_1,peak_array_2,peak_array_3))

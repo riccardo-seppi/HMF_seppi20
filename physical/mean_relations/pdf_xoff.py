@@ -67,8 +67,7 @@ path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits'),os
 
 dir_0_4 = '/data17s/darksim/simulation_3/MD/MD_0.4Gpc/Mass_Xoff_Concentration'
 path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits')
-fig,ax = plt.subplots(1,2,figsize=(20,10))
-fig1,ax1 = plt.subplots(1,2,figsize=(20,10))
+
 zpl = np.array([1/1.0-1, 1/0.6565-1, 1/0.4922-1, 1/0.4123-1])
 colors = ['b','r','c','m']
 
@@ -95,7 +94,7 @@ def modified_sch_log0_list(data,A,alpha,beta,x0,e0):
 
 
 print('HMD')
-aexp = float(os.path.basename(path_2_snapshot_data[3][:-5]).split('_')[1])
+aexp = float(os.path.basename(path_2_snapshot_data[0][:-5]).split('_')[1])
 z_snap = 1/aexp -1
 print('z=%.3g'%(z_snap))
 cosmo = cosmology.setCosmology('multidark-planck')    
@@ -105,7 +104,7 @@ dc = peaks.collapseOverdensity(z = z_snap)
 rho_m = cosmo.rho_m(z=z_snap)*1e9
 h = cosmo.Hz(z=0)/100
 
-hd1 = fits.open(path_2_snapshot_data[3])
+hd1 = fits.open(path_2_snapshot_data[0])
 mass1=hd1[1].data['Mvir']
 logmass1 = np.log10(mass1)
 R_1 = peaks.lagrangianR(mass1)
@@ -124,10 +123,10 @@ print('max = ',max(log1_sigf_1))
 #sys.exit()
 print('computing spinparameter pdf...')
 
-#log1sig_intervals = [-0.15, -0.11,-0.108,  -0.08,-0.078, -0.01,-0.008,  0.07,0.08, 0.20,0.24, 0.4]
+log1sig_intervals = [-0.15, -0.11,-0.108,  -0.08,-0.078, -0.01,-0.008,  0.07,0.08, 0.20,0.24, 0.4]
 #log1sig_intervals = [-0.1, 0.08,0.095,  0.11,0.13, 0.14,0.17,  0.19,0.21, 0.22,0.3, 0.44]
 #log1sig_intervals = [-0.05, 0.13,0.15,  0.16,0.19, 0.2,0.23,  0.25,0.28, 0.29,0.35, 0.48]
-log1sig_intervals = [0.1, 0.18,0.195,  0.2,0.22, 0.23,0.265, 0.27,0.3, 0.31,0.4, 0.52]
+#log1sig_intervals = [0.1, 0.18,0.195,  0.2,0.22, 0.23,0.265, 0.27,0.3, 0.31,0.4, 0.52]
 sig_intervals = 1/(10**np.array(log1sig_intervals))
 #sig_bins = (sig_intervals[1:] + sig_intervals[:-1])/2
 sig_bins = [(sig_intervals[0]+sig_intervals[1])/2, (sig_intervals[1]+sig_intervals[2])/2, (sig_intervals[3]+sig_intervals[4])/2, (sig_intervals[5]+sig_intervals[6])/2, (sig_intervals[7]+sig_intervals[8])/2, (sig_intervals[9]+sig_intervals[10])/2] 
@@ -260,7 +259,7 @@ for i in range(len(names)):
     ax.yaxis.set_tick_params(labelsize=14)
     ax1 = axes[len(names)-1, i]
     ax1.xaxis.set_tick_params(labelsize=14)
-fig.savefig(os.path.join(this_dir,'pdf_xoff_HMD_corner_z_%.3g_slices.png'%(z_snap)))
+#fig.savefig(os.path.join(this_dir,'pdf_xoff_HMD_corner_z_%.3g_slices.png'%(z_snap)))
 
 #END OF ULTRANEST
 
@@ -283,45 +282,45 @@ outschx_list = os.path.join(this_dir,'tables','schechter_HMD_xoff_z_%.3g_simult.
 tab_sch_xoff_list.write(outschx_list,overwrite=True)
 
 
-plt.figure(figsize=(16,8))
-plt.scatter(bins_final_xoff,pdf_xoff, label = r'HMD', ls ='None', marker='o')
-plt.plot(bins_final_xoff,model_pdf_xoff,label='mod sch - full sample')
-plt.ylim(bottom=-5,top=-0.5)
-plt.tick_params(labelsize=20)
-plt.grid(True)
-plt.legend(fontsize=15)
-plt.xlabel(r'$\log_{10}X_{off,P}$',fontsize=25)
-plt.ylabel(r'$P(X_{off,P})$',fontsize=25)
-plt.title('z = %.3g'%(z_snap), fontsize=25)
-plt.tight_layout()
-outpl = os.path.join(this_dir,'figures','pdf_xoff_HMD_z_%.3g.png'%(z_snap))
-os.makedirs(os.path.dirname(outpl), exist_ok=True)
-plt.savefig(outpl, overwrite=True)
+#plt.figure(figsize=(4.5,5.5))
+#plt.scatter(bins_final_xoff,pdf_xoff, label = r'HMD', ls ='None', marker='o')
+#plt.plot(bins_final_xoff,model_pdf_xoff,label='mod sch - full sample')
+#plt.ylim(bottom=-5,top=-0.5)
+#plt.tick_params(labelsize=12)
+#plt.grid(True)
+#plt.legend(fontsize=)
+#plt.xlabel(r'$\log_{10}X_{off,P}$',fontsize=12)
+#plt.ylabel(r'$P(X_{off,P})$',fontsize=12)
+#plt.title('z = %.3g'%(z_snap), fontsize=12)
+#plt.tight_layout()
+#outpl = os.path.join(this_dir,'figures','pdf_xoff_HMD_z_%.3g.png'%(z_snap))
+#os.makedirs(os.path.dirname(outpl), exist_ok=True)
+#plt.savefig(outpl, overwrite=True)
 
-plt.figure(figsize=(16,8))
-plt.scatter(bins_final_xoff-0.6,pdf_xoff0+0.6,label=r'$M_\odot \leq %.3g$'%(M_intervals[1]),marker='o',ls='None')
+plt.figure(figsize=(4.5,5.5))
+plt.scatter(bins_final_xoff-0.6,pdf_xoff0+0.6,label=r'$M_\odot \leq %.3g$'%(M_intervals[1]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff-0.6,modified_sch_log0_list([bins_final_xoff,sig_bins[0]],*popt_pdf_xoff_list)+0.6)
-plt.scatter(bins_final_xoff-0.4,pdf_xoff1+0.4,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[1],M_intervals[2]),marker='o',ls='None')
+plt.scatter(bins_final_xoff-0.4,pdf_xoff1+0.4,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[1],M_intervals[2]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff-0.4,modified_sch_log0_list([bins_final_xoff,sig_bins[1]],*popt_pdf_xoff_list)+0.4)
-plt.scatter(bins_final_xoff-0.2,pdf_xoff2+0.2,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[3],M_intervals[4]),marker='o',ls='None')
+plt.scatter(bins_final_xoff-0.2,pdf_xoff2+0.2,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[3],M_intervals[4]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff-0.2,modified_sch_log0_list([bins_final_xoff,sig_bins[2]],*popt_pdf_xoff_list)+0.2)
-plt.scatter(bins_final_xoff,pdf_xoff3,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[5],M_intervals[6]),marker='o',ls='None')
+plt.scatter(bins_final_xoff,pdf_xoff3,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[5],M_intervals[6]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff,modified_sch_log0_list([bins_final_xoff,sig_bins[3]],*popt_pdf_xoff_list))
-plt.scatter(bins_final_xoff+0.2,pdf_xoff4-0.2,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[7],M_intervals[8]),marker='o',ls='None')
+plt.scatter(bins_final_xoff+0.2,pdf_xoff4-0.2,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[7],M_intervals[8]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff+0.2,modified_sch_log0_list([bins_final_xoff,sig_bins[4]],*popt_pdf_xoff_list)-0.2)
-plt.scatter(bins_final_xoff+0.4,pdf_xoff5-0.4,label=r'$M_\odot > %.3g$'%(M_intervals[9]),marker='o',ls='None')
+plt.scatter(bins_final_xoff+0.4,pdf_xoff5-0.4,label=r'$M_\odot > %.3g$'%(M_intervals[9]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff+0.4,modified_sch_log0_list([bins_final_xoff,sig_bins[5]],*popt_pdf_xoff_list)-0.4)
 #plt.plot(bins_final_xoff,modified_sch_log0(bins_final_xoff,-5,4.,0.4,0.4),label='check')
 #plt.xscale('log')
 #plt.yscale('log')
 plt.xlim(0,3.1)
 plt.ylim(bottom=-5,top=-0.5)
-plt.tick_params(labelsize=20)
+plt.tick_params(labelsize=12)
 plt.grid(True)
-plt.legend(fontsize=15)
-plt.xlabel(r'$\log_{10}X_{off,P} + C_1$',fontsize=25)
-plt.ylabel(r'$\log_{10}P(X_{off,P}) + C_0$',fontsize=25)
-plt.title('z = 1.43', fontsize=25)
+plt.legend(fontsize=8,bbox_to_anchor=(-0.2, 1.1, 1.2, .3), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
+plt.xlabel(r'$\log_{10}X_{off,P} + C_1$',fontsize=12)
+plt.ylabel(r'$\log_{10}P(X_{off,P}) + C_0$',fontsize=12)
+plt.title('z = 0.00', fontsize=12)
 plt.tight_layout()
 outpl = os.path.join(this_dir,'figures','pdf_xoff_HMD_slices_z_%.3g.png'%(z_snap))
 os.makedirs(os.path.dirname(outpl), exist_ok=True)

@@ -224,11 +224,11 @@ for i, p2s in enumerate(path_2_snapshot_data):
     peak_array_3 = np.array(peak_array[ind_three])
     z3_ = np.array(z3[ind_three])
 
-    ax0.scatter(peak_array_1,conc_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=25)
+    ax0.scatter(peak_array_1,conc_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=13)
 
-    ax0.scatter(peak_array_2,conc_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=25)
+    ax0.scatter(peak_array_2,conc_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=13)
 
-    ax0.scatter(peak_array_3,conc_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=25)
+    ax0.scatter(peak_array_3,conc_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=13)
     peak_array_ = np.hstack((peak_array_1,peak_array_2,peak_array_3))
     conc_av_ = np.hstack((conc_av_1,conc_av_2,conc_av_3))
     conc_err_ = np.hstack((conc_err_1,conc_err_2,conc_err_3))

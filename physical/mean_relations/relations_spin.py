@@ -242,9 +242,9 @@ for i, p2s in enumerate(path_2_snapshot_data):
     spin_err_3 = 0.1*spin_av_3
     spin_N3_ = np.array(spin_N3[ind_three])
 
-    ax2.scatter(peak_array_1,spin_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=25)
-    ax2.scatter(peak_array_2,spin_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=25)
-    ax2.scatter(peak_array_3,spin_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=25)
+    ax2.scatter(peak_array_1,spin_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=13)
+    ax2.scatter(peak_array_2,spin_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=13)
+    ax2.scatter(peak_array_3,spin_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=13)
     peak_array_ = np.hstack((peak_array_1,peak_array_2,peak_array_3))
     spin_av_ = np.hstack((spin_av_1,spin_av_2,spin_av_3))
     spin_err_ = np.hstack((spin_err_1,spin_err_2,spin_err_3))
