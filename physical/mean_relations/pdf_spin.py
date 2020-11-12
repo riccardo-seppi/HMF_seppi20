@@ -67,8 +67,6 @@ path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits'),os
 
 dir_0_4 = '/data17s/darksim/simulation_3/MD/MD_0.4Gpc/Mass_Xoff_Concentration'
 path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits')
-fig,ax = plt.subplots(1,2,figsize=(20,10))
-fig1,ax1 = plt.subplots(1,2,figsize=(20,10))
 zpl = np.array([1/1.0-1, 1/0.6565-1, 1/0.4922-1, 1/0.4123-1])
 colors = ['b','r','c','m']
 
@@ -85,7 +83,7 @@ t3 = Table()
 
 t = [t0,t1,t2,t3]
 
-fig,ax = plt.subplots(1,1,figsize=(10,10))
+fig,ax = plt.subplots(1,1,figsize=(4.5,4.5))
 print('HMD')
 for i, p2s in enumerate(path_2_snapshot_data):
     aexp = float(os.path.basename(p2s[:-5]).split('_')[1])
@@ -150,17 +148,17 @@ for i, p2s in enumerate(path_2_snapshot_data):
     outsch = os.path.join(this_dir,'tables','schechter_HMD_lambda_z_%.3g.fit'%(z_snap))
     t[i].write(outsch,overwrite=True)
 
-    ax.scatter(bins_final,pdf_spinpar, label = r'$z=%.3g$'%(z_snap), ls ='None', marker='o')
+    ax.scatter(bins_final,pdf_spinpar, label = r'$z=%.3g$'%(z_snap), ls ='None', marker='o',s=15)
 #    ax.fill_between(bins_final[index],pdf_spinpar[index] - yerr[index],pdf_spinpar[index] + yerr[index], alpha=0.4 )
     ax.plot(bins_final,model_pdf2)
     
 ax.set_xscale('log')
 ax.set_ylim(bottom=-3,top=0.5)
 ax.grid(True)
-ax.tick_params(labelsize=20)
-ax.legend(fontsize=15)
-ax.set_xlabel(r'$\lambda$',fontsize=25)
-ax.set_ylabel(r'$\log_{10}P(\lambda)$',fontsize=25)
+ax.tick_params(labelsize=12)
+ax.legend(fontsize=10)
+ax.set_xlabel(r'$\lambda$',fontsize=12)
+ax.set_ylabel(r'$\log_{10}P(\lambda)$',fontsize=12)
 plt.tight_layout()
 outpl = os.path.join(this_dir,'figures','pdf_spinpar_HMD_all_z.png')
 os.makedirs(os.path.dirname(outpl), exist_ok=True)

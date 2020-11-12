@@ -68,7 +68,7 @@ path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits'),os
 
 dir_0_4 = '/data17s/darksim/simulation_3/MD/MD_0.4Gpc/Mass_Xoff_Concentration'
 path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits')
-fig1,ax1 = plt.subplots(1,1,figsize=(10,10))
+fig1,ax1 = plt.subplots(1,1,figsize=(4.5,5.5))
 zpl = np.array([1/1.0-1, 1/0.6565-1, 1/0.4922-1, 1/0.4123-1])
 colors = ['b','r','c','m']
 
@@ -249,11 +249,11 @@ for i, p2s in enumerate(path_2_snapshot_data):
     xoff_err_3 = 1/np.log(10)*xoff_err3[ind_three]/10**xoff_av_3
 #    xoff_err_3 = 0.1*xoff_av_3
 
-    ax1.scatter(peak_array_1,xoff_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=100)
+    ax1.scatter(peak_array_1,xoff_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=20)
 
-    ax1.scatter(peak_array_2,xoff_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=100)
+    ax1.scatter(peak_array_2,xoff_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=20)
 
-    ax1.scatter(peak_array_3,xoff_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=100)
+    ax1.scatter(peak_array_3,xoff_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=20)
 
 
     peak_array_ = np.hstack((peak_array_1,peak_array_2,peak_array_3))
@@ -299,9 +299,10 @@ xoff_full = tab_data['xoff_full']
 xoff_err_full = tab_data['xoff_err_full']
 xdata = np.vstack((peak_array_full,z_full))
 #popt1,pcov1 = curve_fit(xoff_sigma2,xdata,xoff_full,sigma=xoff_err_full,maxfev=10000000,p0=[(0.17,0.75,-0.4)])   
-popt1,pcov1 = curve_fit(xoff_sigma_pl,xdata,xoff_full,sigma=xoff_err_full,maxfev=10000000,p0=[(-1.3,0.16)])   
-t1.add_column(Column(name='params',data=popt1,unit=''))
-t1.add_column(Column(name='errs',data=np.diag(pcov1),unit=''))
+#popt1,pcov1 = curve_fit(xoff_sigma_pl,xdata,xoff_full,sigma=xoff_err_full,maxfev=10000000,p0=[(-1.3,0.16)])   
+#t1.add_column(Column(name='params',data=popt1,unit=''))
+#t1.add_column(Column(name='errs',data=np.diag(pcov1),unit=''))
+popt1 = [-1.30418,0.15083]
 
 
 z0 = np.repeat(zpl[0],len(peak_array))
@@ -366,11 +367,11 @@ ax1.ticklabel_format(axis='both', style='plain')
 
 #ax1_sec.ticklabel_format(axis='x', style='plain')
 #ax1_sec2.ticklabel_format(axis='y', style='plain')
-ax1.legend(fontsize=17)
-ax1.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=30)
-ax1.set_ylabel(r'$\log_{10}X_{off}$', fontsize=30)
+ax1.legend(fontsize=8,bbox_to_anchor=(-0.3, 1.02, 1.3, .33), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+ax1.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=12)
+ax1.set_ylabel(r'$\log_{10}X_{off}$', fontsize=12)
 #ax1_sec2.set_ylabel(r'$X_{off}\ [kpc]$', fontsize=20, labelpad=15)
-ax1.tick_params(labelsize=25)
+ax1.tick_params(labelsize=12)
 #ax1_sec.tick_params(labelsize=15,labelleft=False,labelbottom=False,labelright=False)
 #ax1_sec2.tick_params(labelsize=15, labeltop = False, labelbottom = False, labelleft = False)
 ax1.grid(True)

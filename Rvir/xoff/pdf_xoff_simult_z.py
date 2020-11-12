@@ -16,6 +16,8 @@ import sys
 import os, glob
 import time
 from astropy.cosmology import FlatLambdaCDM
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import ticker
 from matplotlib.ticker import ScalarFormatter
@@ -67,8 +69,7 @@ path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits'),os
 
 dir_0_4 = '/data17s/darksim/simulation_3/MD/MD_0.4Gpc/Mass_Xoff_Concentration'
 path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits')
-fig,ax = plt.subplots(1,2,figsize=(20,10))
-fig1,ax1 = plt.subplots(1,2,figsize=(20,10))
+
 zpl = np.array([1/1.0-1, 1/0.6565-1, 1/0.4922-1, 1/0.4123-1])
 colors = ['b','r','c','m']
 
@@ -90,7 +91,7 @@ t3 = Table()
 
 t = [t0,t1,t2,t3]
 
-fig,ax = plt.subplots(1,1,figsize=(10,10))
+fig,ax = plt.subplots(1,1,figsize=(4.5,4.5))
 print('HMD')
 for i, p2s in enumerate(path_2_snapshot_data):
     aexp = float(os.path.basename(p2s[:-5]).split('_')[1])
@@ -207,7 +208,7 @@ for i, p2s in enumerate(path_2_snapshot_data):
     outsch = os.path.join(this_dir,'tables','schechter_HMD_xoff_z_%.3g_simult_code.fit'%(z_snap))
     t[i].write(outsch,overwrite=True)
 
-    ax.scatter(bins_final,pdf_xoff, label = r'$z=%.3g$'%(z_snap), ls ='None', marker='o')
+    ax.scatter(bins_final,pdf_xoff, label = r'$z=%.3g$'%(z_snap), ls ='None', marker='o',s=15)
 #    ax.fill_between(bins_final[index],pdf_spinpar[index] - yerr[index],pdf_spinpar[index] + yerr[index], alpha=0.4 )
     ax.plot(bins_final,model_pdf)
     
@@ -215,10 +216,10 @@ ax.set_xscale('log')
 ax.set_ylim(bottom=-4.0,top=-1.0)
 ax.set_xlim(0.9e-3,0.7)
 ax.grid(True)
-ax.tick_params(labelsize=20)
-ax.legend(fontsize=15)
-ax.set_xlabel(r'$X_{off}$',fontsize=25)
-ax.set_ylabel(r'$\log_{10}P(X_{off})$',fontsize=25)
+ax.tick_params(labelsize=12)
+ax.legend(fontsize=10)
+ax.set_xlabel(r'$X_{off}$',fontsize=12)
+ax.set_ylabel(r'$\log_{10}P(X_{off})$',fontsize=12)
 fig.tight_layout()
 outpl = os.path.join(this_dir,'figures','pdf_xoff_HMD_all_z.png')
 os.makedirs(os.path.dirname(outpl), exist_ok=True)

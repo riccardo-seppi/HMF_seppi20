@@ -66,10 +66,7 @@ path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits'),os
 
 dir_0_4 = '/data17s/darksim/simulation_3/MD/MD_0.4Gpc/Mass_Xoff_Concentration'
 path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits')
-fig0,ax0 = plt.subplots(1,1,figsize=(10,10))
-fig1,ax1 = plt.subplots(1,1,figsize=(10,10))
-fig2,ax2 = plt.subplots(1,1,figsize=(10,10))
-fig3,ax3 = plt.subplots(1,1,figsize=(10,10))
+fig2,ax2 = plt.subplots(1,1,figsize=(4.5,5.5))
 zpl = np.array([1/1.0-1, 1/0.6565-1, 1/0.4922-1, 1/0.4123-1])
 colors = ['b','r','c','m']
 
@@ -203,18 +200,18 @@ for i, p2s in enumerate(path_2_snapshot_data):
         spin_av3[jj],spin_std3[jj],spin_N3[jj] = get_average(spin3,(dc/sigf_3>=x_min) & (dc/sigf_3<x_max)) 
     print('values computed!')
 
-    plt.figure(figsize=(10,10))
+    #plt.figure(figsize=(10,10))
     #plt.scatter(logxoff_data1,log1_sigf_1, label = r'$z= %.3g$'%(z_snap))
-    plt.scatter(peak_array,spin_av1, label = r'$z= %.3g$'%(z_snap))
-    plt.fill_between(peak_array,spin_av1-spin_std1/np.sqrt(spin_N1),spin_av1+spin_std1/np.sqrt(spin_N1),alpha=0.5)
-    plt.tick_params(labelsize=15)
-    plt.legend(fontsize=15)
-    plt.xlabel(r'$\delta_c/\sigma$', fontsize=20)
-    plt.ylabel(r'$Spin$', fontsize=20)
-    plt.grid(True)
-    outf = os.path.join(this_dir,'figures','spin_sigma_%.3g.png'%(z_snap))
-    os.makedirs(os.path.dirname(outf), exist_ok=True)
-    plt.savefig(outf, overwrite=True)
+    #plt.scatter(peak_array,spin_av1, label = r'$z= %.3g$'%(z_snap))
+    #plt.fill_between(peak_array,spin_av1-spin_std1/np.sqrt(spin_N1),spin_av1+spin_std1/np.sqrt(spin_N1),alpha=0.5)
+    #plt.tick_params(labelsize=15)
+    #plt.legend(fontsize=15)
+    #plt.xlabel(r'$\delta_c/\sigma$', fontsize=20)
+    #plt.ylabel(r'$Spin$', fontsize=20)
+    #plt.grid(True)
+    #outf = os.path.join(this_dir,'figures','spin_sigma_%.3g.png'%(z_snap))
+    #os.makedirs(os.path.dirname(outf), exist_ok=True)
+    #plt.savefig(outf, overwrite=True)
 
 #computing averages on each cube
     spin_err1 = spin_std1/np.sqrt(spin_N1)
@@ -245,9 +242,9 @@ for i, p2s in enumerate(path_2_snapshot_data):
     spin_err_3 = 0.1*spin_av_3
     spin_N3_ = np.array(spin_N3[ind_three])
 
-    ax2.scatter(peak_array_1,spin_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=18)
-    ax2.scatter(peak_array_2,spin_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=18)
-    ax2.scatter(peak_array_3,spin_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=18)
+    ax2.scatter(peak_array_1,spin_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=25)
+    ax2.scatter(peak_array_2,spin_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=25)
+    ax2.scatter(peak_array_3,spin_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=25)
     peak_array_ = np.hstack((peak_array_1,peak_array_2,peak_array_3))
     spin_av_ = np.hstack((spin_av_1,spin_av_2,spin_av_3))
     spin_err_ = np.hstack((spin_err_1,spin_err_2,spin_err_3))
@@ -284,23 +281,25 @@ z3 = np.repeat(zpl[3],len(peak_array))
 
 red_arr = [z0,z1,z2,z3]
 
-for k,red in enumerate(red_arr):
+#for k,red in enumerate(red_arr):
 
-    ax2.plot(peak_array,spin_sigma([peak_array,red],*popt2),c='%.c'%(colors[k]))
+#    ax2.plot(peak_array,spin_sigma([peak_array,red],*popt2),c='%.c'%(colors[k]))
 #    ax1[1].plot(peak_array,spinpar_sigma([peak_array,red],*popt3),c='%.c'%(colors[k]))
+ax2.plot(peak_array,spin_sigma([peak_array,z0],*popt2),c='k',label='model')
 
 outt2 = os.path.join(this_dir,'tables','spin_sigma_params.fit')
 t2.write(outt2,overwrite=True)
 
 h=cosmo.Hz(z=0)/100
 
-ax2.set_ylabel(r'$\lambda$', fontsize=20)
-ax2.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=20)
+ax2.set_ylabel(r'$\lambda$', fontsize=12)
+ax2.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=12)
 ax2.grid(True)
 ax2.set_xlim(right=4.2)
 ax2.set_ylim(0.02)
-ax2.legend(fontsize=15)
-ax2.tick_params(labelsize=15)
+ax2.legend(fontsize=8,bbox_to_anchor=(-0.3, 1.02, 1.3, .33), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+ax2.tick_params(labelsize=12)
+fig2.tight_layout()
 outfig2 = os.path.join(this_dir,'figures','relations_spin_sigma.png')
 os.makedirs(os.path.dirname(outfig2), exist_ok=True)
 fig2.savefig(outfig2, overwrite=True)
