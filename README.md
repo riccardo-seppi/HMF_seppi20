@@ -3,6 +3,8 @@ HMF_seppi20
 
 Code developed for computation and fitting in Seppi et al. 2020
 
+- compute_MF_example.py: this example shows how to compute the multiplicity function from N-body simulations
+
 == physical directory==
 
 - mean relations: mean relations between concentration, spin and Xoff,P with mass. Probability density distributions of concentration, spin, Xoff,P. 
@@ -13,6 +15,8 @@ Code developed for computation and fitting in Seppi et al. 2020
 
 - xoff: offset-mass relation and distribution of xoff.
 - build and fit the mass-offset-spin-z function normalized to the virial radius. 
+
+
 
 
 todo: add more documentation
