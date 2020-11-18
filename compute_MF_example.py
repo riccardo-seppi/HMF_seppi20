@@ -65,7 +65,7 @@ outf = os.path.join(mydir,'figures','HMD_z_%.3f_MF.png'%(z_snap))
 
 fig,ax = plt.subplots(figsize=(8,8))
 x = np.log10(1/sigma)
-ax.fill_between(x,f-ferr,f+ferr,label='data',alpha=0.8)
+ax.fill_between(x,f-ferr,f+ferr,label='data',alpha=0.8,color='C9')
 ax.plot(x,mf_tinker,label='tinker08',lw=3)
 ax.plot(x,mf_despali,label='despali16',lw=3)
 ax.plot(x,mf_comparat,label='comparat17',lw=3)
