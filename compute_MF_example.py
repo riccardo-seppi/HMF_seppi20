@@ -52,6 +52,9 @@ dn_dlnM = cts/Vol/dlnM     #(Mpc/h)^-3
 
 f = dn_dlnM*mass_bins/rho_m/cosmo.sigma(R,z=z_snap,derivative=True)*(-3.) # (Mpc/h)^-3 * Msun/h * (Msun h^2/Mpc^3)^-1 = number
 
+#compute the error: poisson count 1/sqrt(N) and cosmic variance (~2% in HMD)
+ferr = np.sqrt(1/cts + 0.02**2)*f
+
 #add three models for comparison
 mf_tinker = mf.massFunction(sigma,q_in='sigma', z=z_snap, mdef = 'vir', model = 'tinker08', q_out = 'f')
 mf_despali = mf.massFunction(sigma,q_in='sigma', z=z_snap, mdef = 'vir', model = 'despali16', q_out = 'f')
@@ -62,7 +65,7 @@ outf = os.path.join(mydir,'figures','HMD_z_%.3f_MF.png'%(z_snap))
 
 fig,ax = plt.subplots(figsize=(8,8))
 x = np.log10(1/sigma)
-ax.plot(x,f,label='data',lw=4)
+ax.fill_between(x,f-ferr,f+ferr,label='data',alpha=0.8)
 ax.plot(x,mf_tinker,label='tinker08',lw=3)
 ax.plot(x,mf_despali,label='despali16',lw=3)
 ax.plot(x,mf_comparat,label='comparat17',lw=3)
