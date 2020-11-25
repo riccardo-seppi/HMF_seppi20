@@ -20,6 +20,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter
+from matplotlib.ticker import NullFormatter
 import astropy.units as u
 import astropy.constants as cc
 import astropy.io.fits as fits
@@ -289,17 +290,49 @@ def Xoff_log(x):
 
 ax1.set_xscale('log')
 ax1.set_yscale('log')
-ax1.set_xticks([0.6,0.8,1,2,3,4])
+ax1.set_xlim(left=0.8)
+ax1.set_xticks([0.8,1,2,3,4])
 ax1.set_yticks([1.0,1.2,1.4,1.6,1.8,2.0,2.2,2.4])
 ax1.set_ylim(1.0,2.4)
+
+h=cosmo.Hz(z=0)/100
+dc0 = peaks.collapseOverdensity(z = 0)
+def Mass_peak(x):
+    r=cosmo.sigma(dc0/x,z=0,inverse=True)
+    M=peaks.lagrangianM(r)/h
+    return np.log10(M)
+
+def peak_mass(x):
+    M=10**x
+    r=peaks.lagrangianR(M*h)
+    sigma=cosmo.sigma(r,z=0)
+    nu=dc/sigma
+    return nu
 
 ax1.xaxis.set_major_formatter(ScalarFormatter())
 ax1.yaxis.set_major_formatter(ScalarFormatter())
 ax1.ticklabel_format(axis='both', style='plain')
 
-ax1.legend(fontsize=8,bbox_to_anchor=(-0.3, 1.05, 1.3, .33), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+ax1_sec = ax1.twiny()
+ax1_sec.set_xscale('log')
+ax1_sec.set_xlim(ax1.get_xlim())
+
+mass_values = np.array([13.0,14.0,14.5,15.0,15.5])
+new_tick_locations = peak_mass(mass_values)
+print(mass_values)
+print(new_tick_locations)
+ax1_sec.xaxis.set_major_formatter(NullFormatter())
+ax1_sec.xaxis.set_minor_formatter(NullFormatter())
+ax1_sec.tick_params(axis='x', which='minor', top=False)
+ax1.tick_params(axis='x', which='minor', bottom=False)
+ax1_sec.set_xticks(new_tick_locations)
+ax1_sec.set_xticklabels(mass_values)
+
+ax1.legend(fontsize=8,bbox_to_anchor=(-0.3, 1.16, 1.3, .3), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
 ax1.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=12)
 ax1.set_ylabel(r'$\log_{10}X_{off,P}$', fontsize=12)
+ax1_sec.set_xlabel(r'$\log_{10}$M [M$_{\odot}$]', fontsize=12)
+ax1_sec.tick_params(labelsize=12)
 ax1.tick_params(labelsize=12)
 ax1.grid(True)
 fig1.tight_layout()
