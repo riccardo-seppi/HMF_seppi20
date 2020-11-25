@@ -321,8 +321,9 @@ t1.write(outt1,overwrite=True)
 
 
 h=cosmo.Hz(z=0)/100
-def Mass_sigma(x):
-    r=cosmo.sigma(1.68/x,z=0,inverse=True)
+dc0 = peaks.collapseOverdensity(z = 0)
+def Mass_peak(x):
+    r=cosmo.sigma(dc0/x,z=0,inverse=True)
     M=peaks.lagrangianM(r)/h
     return np.log10(M)
 
@@ -333,7 +334,7 @@ def Xoff_log(x):
 
 ax1.set_xscale('log')
 #ax1.set_yscale('log')
-ax1.set_xticks([0.6,0.8,1,2,3,4])
+ax1.set_xticks([0.8,1,2,3,4])
 #ax1.set_yticks([1.0,1.2,1.4,1.6,1.8,2.0,2.2,2.4])
 #ax1.set_ylim(1e-3,0.7)
 
@@ -341,9 +342,14 @@ ax1.xaxis.set_major_formatter(ScalarFormatter())
 ax1.yaxis.set_major_formatter(ScalarFormatter())
 ax1.ticklabel_format(axis='both', style='plain')
 
-#ax1_sec = ax1.twiny()
-#xmin,xmax=ax1.get_xlim()
-#ax1_sec.set_xlim((Mass_sigma(xmin),Mass_sigma(xmax)))
+ax1_sec = ax1.twiny()
+new_tick_locations = np.array([12.5,13.0,13.5,14.0, 14.5, 15.0, 15.5])
+xmin,xmax=ax1.get_xlim()
+ax1_sec.set_xlim(Mass_peak(xmin),Mass_peak(xmax))
+print(xmin,xmax)
+print(Mass_peak(xmin),Mass_peak(xmax))
+#ax1_sec.set_xscale('log')
+ax1_sec.set_xticks(new_tick_locations)
 #ax1_sec.plot([],[])
 #ax1_sec.set_xlabel(r'$\log_{10}M\ [M_{\odot}]$', fontsize=20, labelpad=15)
 #ax1_sec.set_xscale('log')
@@ -367,11 +373,13 @@ ax1.ticklabel_format(axis='both', style='plain')
 
 #ax1_sec.ticklabel_format(axis='x', style='plain')
 #ax1_sec2.ticklabel_format(axis='y', style='plain')
-ax1.legend(fontsize=8,bbox_to_anchor=(-0.3, 1.02, 1.3, .33), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+ax1.legend(fontsize=8,bbox_to_anchor=(-0.3, 1.16, 1.3, .33), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
 ax1.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=12)
 ax1.set_ylabel(r'$\log_{10}X_{off}$', fontsize=12)
+ax1_sec.set_xlabel(r'$\log_{10}$M [M$_{\odot}$]', fontsize=12)
 #ax1_sec2.set_ylabel(r'$X_{off}\ [kpc]$', fontsize=20, labelpad=15)
 ax1.tick_params(labelsize=12)
+ax1_sec.tick_params(labelsize=12)
 #ax1_sec.tick_params(labelsize=15,labelleft=False,labelbottom=False,labelright=False)
 #ax1_sec2.tick_params(labelsize=15, labeltop = False, labelbottom = False, labelleft = False)
 ax1.grid(True)

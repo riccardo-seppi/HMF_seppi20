@@ -147,7 +147,7 @@ def get_pdf_conc(x):
     pdf = pdf*diff_bins_conc
 
     N = np.histogram(x,bins=edges_conc)[0]
-    err_ = np.sqrt(1/N)*pdf#*3
+    err_ = np.sqrt(1/N)*pdf*2
     err = 1/np.log(10)*err_/pdf
     pdf = np.log10(pdf)
     
@@ -196,10 +196,10 @@ ax1.plot(bins_conc,modified_sch_list([bins_conc,sig_bins[5]],*popt_pdf_conc_list
 ax1.set_ylim(bottom=-2.5,top=-1.2)
 ax1.tick_params(labelsize=12)
 ax1.grid(True)
-ax1.legend(fontsize=10,bbox_to_anchor=(0, 1.1, 2.15, .3), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+ax1.legend(fontsize=10,bbox_to_anchor=(0, 1.03, 2.05, .3), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
 #ax1.set_xlabel(r'$c = R_{vir}/R_s$',fontsize=12)
 ax1.set_ylabel(r'$\log_{10}P(c)+C_0$',fontsize=12)
-ax1.set_title('z = 0.00', fontsize=12)
+ax1.text(9,-1.4,'z = 0.00', fontsize=12, bbox=dict(facecolor='white'))
 
 
 
@@ -267,7 +267,7 @@ ax2.tick_params(labelsize=12)
 ax2.grid(True)
 #ax2.set_xlabel(r'$c = R_{vir}/R_s$',fontsize=12)
 #ax2.set_ylabel(r'$\log_{10}P(c)+C_0$',fontsize=12)
-ax2.set_title('z = 0.52', fontsize=12)
+ax2.text(9,-1.4,'z = 0.52', fontsize=12, bbox=dict(facecolor='white'))
 
 
 ############################### z=1.03 ###############################################
@@ -334,7 +334,7 @@ ax3.tick_params(labelsize=12)
 ax3.grid(True)
 ax3.set_xlabel(r'$c = R_{vir}/R_s$',fontsize=12)
 ax3.set_ylabel(r'$\log_{10}P(c)+C_0$',fontsize=12)
-ax3.set_title('z = 1.03', fontsize=12)
+ax3.text(9,-1.4,'z = 1.03', fontsize=12, bbox=dict(facecolor='white'))
 
 
 
@@ -401,10 +401,13 @@ ax4.set_ylim(bottom=-2.5,top=-1.2)
 ax4.tick_params(labelsize=12)
 ax4.grid(True)
 ax4.set_xlabel(r'$c = R_{vir}/R_s$',fontsize=12)
-ax4.set_title('z = 1.43', fontsize=12)
+ax4.text(9,-1.4,'z = 1.43', fontsize=12, bbox=dict(facecolor='white'))
 
 
-
+plt.setp(ax1.get_xticklabels(), visible=False)
+plt.setp(ax2.get_xticklabels(), visible=False)
+plt.setp(ax2.get_yticklabels(), visible=False)
+plt.setp(ax4.get_yticklabels(), visible=False)
 
 
 plt.tight_layout()

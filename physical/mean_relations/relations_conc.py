@@ -309,21 +309,20 @@ ax0.plot(x_klypin_z15,y_klypin_z15,label=r'Klypin16 z=1.5',ls='dashed')
 ax0.fill_between(x_white,y_white_low,y_white_up,label='Wang19', alpha=0.5)
 
 h=cosmo.Hz(z=0)/100
-def Mass_sigma(x):
-    r=cosmo.sigma(1.68/x,z=0,inverse=True)
+dc0 = peaks.collapseOverdensity(z = 0)
+def Mass_peak(x):
+    r=cosmo.sigma(dc0/x,z=0,inverse=True)
     M=peaks.lagrangianM(r)/h
     return np.log10(M)
 
-def Xoff_log(x):
-    y = 10**x
-    return y/h
 
 ax0.set_ylabel(r'$conc$', fontsize=12)
 ax0.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=12)
 ax0.grid(True)
+ax0.set_xlim(left=0.8)
 ax0.set_xscale('log')
 ax0.set_yscale('log')
-ax0.set_xticks([0.6,0.8,1,2,3,4])
+ax0.set_xticks([0.8,1,2,3,4])
 ax0.set_yticks([3,4,5,6,7,8,9,10,11])
 ax0.set_ylim(3.0,11)
 
@@ -331,8 +330,19 @@ ax0.xaxis.set_major_formatter(ScalarFormatter())
 ax0.yaxis.set_major_formatter(ScalarFormatter())
 ax0.ticklabel_format(axis='both', style='plain')
 
-ax0.legend(fontsize=8,bbox_to_anchor=(-0.2, 1.05, 1.2, .3), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+ax0_sec = ax0.twiny()
+new_tick_locations = np.array([12.5,13.0,13.5,14.0, 14.5, 15.0, 15.5])
+xmin,xmax=ax0.get_xlim()
+ax0_sec.set_xlim(Mass_peak(xmin),Mass_peak(xmax))
+print(xmin,xmax)
+print(Mass_peak(xmin),Mass_peak(xmax))
+#ax0_sec.set_xscale('log')
+ax0_sec.set_xticks(new_tick_locations)
+
+ax0.legend(fontsize=8,bbox_to_anchor=(-0.2, 1.16, 1.2, .3), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
 ax0.tick_params(labelsize=12)
+ax0_sec.set_xlabel(r'$\log_{10}$M [M$_{\odot}$]', fontsize=12)
+ax0_sec.tick_params(labelsize=12)
 fig0.tight_layout()
 outfi0 = os.path.join(this_dir,'figures','relation_c_sigma.png')
 os.makedirs(os.path.dirname(outfi0), exist_ok=True)
