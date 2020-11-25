@@ -18,6 +18,7 @@ import time
 from astropy.cosmology import FlatLambdaCDM
 import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter
+from matplotlib.ticker import NullFormatter
 import astropy.units as u
 import astropy.constants as cc
 import astropy.io.fits as fits
@@ -297,29 +298,49 @@ def Mass_peak(x):
     M=peaks.lagrangianM(r)/h
     return np.log10(M)
 
+def peak_mass(x):
+    M=10**x
+    r=peaks.lagrangianR(M*h)
+    sigma=cosmo.sigma(r,z=0)
+    nu=dc/sigma
+    return nu
+
 #ax2.set_xscale('log')
+ax2.set_xlim(left=0.8,right=4.2)
+ax2.set_xticks([1,2,3,4])
 ax2.xaxis.set_major_formatter(ScalarFormatter())
 ax2.yaxis.set_major_formatter(ScalarFormatter())
 ax2.ticklabel_format(axis='both', style='plain')
-ax2.set_xticks([0.8,1,2,3,4])
+
 ax2_sec = ax2.twiny()
-new_tick_locations = np.array([12.5,13.0,13.5,14.0, 14.5, 15.0, 15.5])
-xmin,xmax=ax2.get_xlim()
-print(xmin,xmax)
-print(Mass_peak(xmin),Mass_peak(xmax))
-ax2_sec.set_xlim(Mass_peak(xmin),Mass_peak(xmax))
 #ax2_sec.set_xscale('log')
+ax2_sec.set_xlim(ax2.get_xlim())
+
+mass_values = np.array([13.0,14.0, 14.5, 15.0, 15.5])
+new_tick_locations = peak_mass(mass_values)
+print(mass_values)
+print(new_tick_locations)
+ax2_sec.xaxis.set_major_formatter(NullFormatter())
+ax2_sec.xaxis.set_minor_formatter(NullFormatter())
+ax2_sec.tick_params(axis='x', which='minor', top=False)
 ax2_sec.set_xticks(new_tick_locations)
+ax2_sec.set_xticklabels(mass_values)
+#xmin,xmax=ax2.get_xlim()
+#print(xmin,xmax)
+#print(Mass_peak(xmin),Mass_peak(xmax))
+#ax2_sec.set_xlim(Mass_peak(xmin),Mass_peak(xmax))
+#ax2_sec.set_xscale('log')
+#ax2_sec.set_xticks(new_tick_locations)
 
 ax2.set_ylabel(r'$\lambda$', fontsize=12)
 ax2.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=12)
 ax2_sec.set_xlabel(r'$\log_{10}$M [M$_{\odot}$]', fontsize=12)
 ax2_sec.tick_params(labelsize=12)
 ax2.grid(True)
-ax2.set_xlim(right=4.2)
+#ax2.set_xlim(right=4.2)
 ax2.set_ylim(0.02)
 ax2.legend(fontsize=8,bbox_to_anchor=(-0.3, 1.16, 1.3, .33), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
-ax2.tick_params(labelsize=12)
+ax2.tick_params(labelsize=12,top=False, labeltop=False)
 fig2.tight_layout()
 outfig2 = os.path.join(this_dir,'figures','relations_spin_sigma.png')
 os.makedirs(os.path.dirname(outfig2), exist_ok=True)

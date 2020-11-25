@@ -18,6 +18,7 @@ import time
 from astropy.cosmology import FlatLambdaCDM
 import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter
+from matplotlib.ticker import NullFormatter
 import astropy.units as u
 import astropy.constants as cc
 import astropy.io.fits as fits
@@ -315,6 +316,12 @@ def Mass_peak(x):
     M=peaks.lagrangianM(r)/h
     return np.log10(M)
 
+def peak_mass(x):
+    M=10**x
+    r=peaks.lagrangianR(M*h)
+    sigma=cosmo.sigma(r,z=0)
+    nu=dc/sigma
+    return nu
 
 ax0.set_ylabel(r'$conc$', fontsize=12)
 ax0.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=12)
@@ -331,13 +338,25 @@ ax0.yaxis.set_major_formatter(ScalarFormatter())
 ax0.ticklabel_format(axis='both', style='plain')
 
 ax0_sec = ax0.twiny()
-new_tick_locations = np.array([12.5,13.0,13.5,14.0, 14.5, 15.0, 15.5])
-xmin,xmax=ax0.get_xlim()
-ax0_sec.set_xlim(Mass_peak(xmin),Mass_peak(xmax))
-print(xmin,xmax)
-print(Mass_peak(xmin),Mass_peak(xmax))
-#ax0_sec.set_xscale('log')
+ax0_sec.set_xscale('log')
+ax0_sec.set_xlim(ax0.get_xlim())
+
+mass_values = np.array([13.0,14.0,14.5,15.0,15.5])
+new_tick_locations = peak_mass(mass_values)
+print(mass_values)
+print(new_tick_locations)
+ax0_sec.xaxis.set_major_formatter(NullFormatter())
+ax0_sec.xaxis.set_minor_formatter(NullFormatter())
+ax0_sec.tick_params(axis='x', which='minor', top=False)
+ax0.tick_params(axis='x', which='minor', bottom=False)
 ax0_sec.set_xticks(new_tick_locations)
+ax0_sec.set_xticklabels(mass_values)
+#xmin,xmax=ax0.get_xlim()
+#ax0_sec.set_xlim(Mass_peak(xmin),Mass_peak(xmax))
+#print(xmin,xmax)
+#print(Mass_peak(xmin),Mass_peak(xmax))
+#ax0_sec.set_xscale('log')
+#ax0_sec.set_xticks(new_tick_locations)
 
 ax0.legend(fontsize=8,bbox_to_anchor=(-0.2, 1.16, 1.2, .3), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
 ax0.tick_params(labelsize=12)
