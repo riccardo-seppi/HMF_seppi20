@@ -200,28 +200,25 @@ for i, p2s in enumerate(path_2_snapshot_data):
 
 #computing averages on each cube
 
-    conc_err1 = conc_std1/np.sqrt(conc_N1)
-
-   # print('conc_N1 = ', conc_N1)
-   # print('xoff_N1 = ', xoff_N1)
-
     ind_one = ((peak_array > cuts_HMD_low[i]) & (~np.isnan(conc_av1)) & (conc_N1 > 100))
+    conc_err_1 = conc_std1[ind_one]/np.sqrt(conc_N1[ind_one])
     peak_array_1 = np.array(peak_array[ind_one])
     z1_ = np.array(z1[ind_one])
     conc_av_1 = np.array(conc_av1[ind_one])
     #conc_err_ = 10*np.array(conc_err[~np.isnan(conc_av)])
-    conc_err_1 = 0.1*conc_av_1
+    #conc_err_1 = 0.1*conc_av_1
     
-    conc_err2 = conc_std2/np.sqrt(conc_N2)
     ind_two = ((peak_array > cuts_BigMD_low[i]) & (peak_array < cuts_BigMD_up[i]) & (~np.isnan(conc_av2))& (conc_N2 > 100))
+    conc_err_2 = conc_std2[ind_two]/np.sqrt(conc_N2[ind_two])
     peak_array_2 = np.array(peak_array[ind_two])
     z2_ = np.array(z2[ind_two])
     conc_av_2 = np.array(conc_av2[ind_two])
-    conc_err_2 = 0.1*conc_av_2
-    conc_err3 = conc_std3/np.sqrt(conc_N3)
+    #conc_err_2 = 0.1*conc_av_2
+
     ind_three = ((peak_array > cuts_MDPL_low[i]) & (peak_array < cuts_MDPL_up[i]) & (~np.isnan(conc_av3)) & (conc_N3 > 100))
+    conc_err_3 = conc_std3[ind_three]/np.sqrt(conc_N3[ind_three])
     conc_av_3 = np.array(conc_av3[ind_three])
-    conc_err_3 = 0.1*conc_av_3
+    #conc_err_3 = 0.1*conc_av_3
     peak_array_3 = np.array(peak_array[ind_three])
     z3_ = np.array(z3[ind_three])
 

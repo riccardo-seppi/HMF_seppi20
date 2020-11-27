@@ -215,21 +215,16 @@ for i, p2s in enumerate(path_2_snapshot_data):
     #plt.savefig(outf, overwrite=True)
 
 #computing averages on each cube
-    spin_err1 = spin_std1/np.sqrt(spin_N1)
-
-   # print('conc_N1 = ', conc_N1)
-   # print('xoff_N1 = ', xoff_N1)
-
     ind_one = ((peak_array > cuts_HMD_low[i]) & (~np.isnan(spin_av1)) & (spin_N1 > 100))
+    spin_err_1 = spin_std1[ind_one]/np.sqrt(spin_N1[ind_one])
     peak_array_1 = np.array(peak_array[ind_one])
     z1_ = np.array(z1[ind_one])
     spin_av_1 = np.array(spin_av1[ind_one])
-    spin_err_1 = 0.1*spin_av_1
+    #spin_err_1 = 0.1*spin_av_1
     spin_N1_ = np.array(spin_N1[ind_one])
 
-    spin_err2 = spin_std2/np.sqrt(spin_N2)
-
     ind_two = ((peak_array > cuts_BigMD_low[i]) & (peak_array < cuts_BigMD_up[i]) & (~np.isnan(spin_av2))& (spin_N2 > 100))
+    spin_err_2 = spin_std2[ind_two]/np.sqrt(spin_N2[ind_two])
     peak_array_2 = np.array(peak_array[ind_two])
     z2_ = np.array(z2[ind_two])
     spin_av_2 = np.array(spin_av2[ind_two])
@@ -237,10 +232,11 @@ for i, p2s in enumerate(path_2_snapshot_data):
     spin_N2_ = np.array(spin_N2[ind_two])
 
     ind_three = ((peak_array > cuts_MDPL_low[i]) & (peak_array < cuts_MDPL_up[i]) & (~np.isnan(spin_av3)) & (spin_N3 > 100))
+    spin_err_3 = spin_std3[ind_three]/np.sqrt(spin_N3[ind_three])
     peak_array_3 = np.array(peak_array[ind_three])
     z3_ = np.array(z3[ind_three])
     spin_av_3 = np.array(spin_av3[ind_three])
-    spin_err_3 = 0.1*spin_av_3
+    #spin_err_3 = 0.1*spin_av_3
     spin_N3_ = np.array(spin_N3[ind_three])
 
     ax2.scatter(peak_array_1,spin_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=13)

@@ -89,10 +89,7 @@ def xoff_sigma2(ar,a0,b0,c0):
     x,z=ar
     Ez = cosmo.Ez(z)
     sigma = 1/x*dc
-#    return b0/(1+z)**h0*(1+c0*(sigma/a0)**(e0*sigma))*(1+d0*(sigma/g0)**(f0*sigma))
-#    return b0/(1+z)**d0*(1+c0*(sigma/a0/(1+z)**f0)**(e0*sigma))
     return b0/((Ez)**0.06)*(1+2.39*(sigma/(a0/(Ez)**0.8))**(c0*sigma))
-#    return b0/(1+z)**0.2*(1+0.44*(sigma/a0)**1.05)*(1-0.97*(sigma/0.98)**0.03)
 
 
 
@@ -211,25 +208,27 @@ for i, p2s in enumerate(path_2_snapshot_data):
 
 
 #computing averages on each cube
-    xoff_err1 = xoff_std1/np.sqrt(xoff_N1)
     ind_one = ((peak_array > cuts_HMD_low[i]) & (~np.isnan(xoff_av1)) & (xoff_N1 > 100))
+    xoff_err_1 = xoff_std1[ind_one]/np.sqrt(xoff_N1[ind_one])
     peak_array_1 = np.array(peak_array[ind_one])
     z1_ = np.array(z1[ind_one])
     xoff_av_1 = np.array(xoff_av1[ind_one])
     #xoff_err_ = 10*np.array(xoff_err[~np.isnan(xoff_av)])
-    xoff_err_1 = 0.1*xoff_av_1
-    xoff_err2 = xoff_std2/np.sqrt(xoff_N2)
+    #xoff_err_1 = 0.1*xoff_av_1
+
     ind_two = ((peak_array > cuts_BigMD_low[i]) & (peak_array < cuts_BigMD_up[i]) & (~np.isnan(xoff_av2))& (xoff_N2 > 100))
+    xoff_err_2 = xoff_std2[ind_two]/np.sqrt(xoff_N2[ind_two])
     peak_array_2 = np.array(peak_array[ind_two])
     z2_ = np.array(z2[ind_two])
     xoff_av_2 = np.array(xoff_av2[ind_two])
-    xoff_err_2 = 0.1*xoff_av_2
-    xoff_err3 = xoff_std3/np.sqrt(xoff_N3)
+    #xoff_err_2 = 0.1*xoff_av_2
+
     ind_three = ((peak_array > cuts_MDPL_low[i]) & (peak_array < cuts_MDPL_up[i]) & (~np.isnan(xoff_av3)) & (xoff_N3 > 100))
+    xoff_err_3 = xoff_std3[ind_three]/np.sqrt(xoff_N3[ind_three])
     peak_array_3 = np.array(peak_array[ind_three])
     z3_ = np.array(z3[ind_three])
     xoff_av_3 = np.array(xoff_av3[ind_three])
-    xoff_err_3 = 0.1*xoff_av_3
+    #xoff_err_3 = 0.1*xoff_av_3
     ax1.scatter(peak_array_1,xoff_av_1, label = r'$z= %.3g\ HMD$'%(z_snap), ls='None',c='%.c'%(colors[i]),marker='o',facecolors='none',s=13)
     ax1.scatter(peak_array_2,xoff_av_2, label = r'$z= %.3g\ BigMD$'%(z_snap), ls='None', edgecolors='%.c'%(colors[i]), marker='^',facecolors='none',s=13)
     ax1.scatter(peak_array_3,xoff_av_3, label = r'$z= %.3g\ MDPL$'%(z_snap), ls ='None', edgecolors='%.c'%(colors[i]), marker='s',facecolors='none',s=13)
