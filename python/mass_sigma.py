@@ -58,7 +58,7 @@ def Mass_log10sigma(x):
     M=peaks.lagrangianM(r)/h
     return np.log10(M)
 
-outfig = os.path.join('figures','Mass_sigma_relations.png')
+outfig = os.path.join('/home/rseppi/HMF_seppi20','figures','Mass_sigma_relations.png')
 fig = plt.figure(figsize=(18,6))
 gs = fig.add_gridspec(1,3)
 ax1 = fig.add_subplot(gs[0,0])
