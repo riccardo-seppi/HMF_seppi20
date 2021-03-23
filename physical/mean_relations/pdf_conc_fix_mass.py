@@ -58,7 +58,7 @@ this_dir='.'
 
 #plt.figure(figsize=(10,10))
 #path_2_snapshot_data = np.array(glob.glob(os.path.join(test_dir, 'distinct_*.fits')))
-path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits'),os.path.join(test_dir,'distinct_0.6565.fits'),os.path.join(test_dir,'distinct_0.4922.fits'),os.path.join(test_dir,'distinct_0.4123.fits')])
+path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits.gz'),os.path.join(test_dir,'distinct_0.6565.fits.gz'),os.path.join(test_dir,'distinct_0.4922.fits.gz'),os.path.join(test_dir,'distinct_0.4123.fits.gz')])
 
 dir_2_5 = '/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration'
 
@@ -87,7 +87,7 @@ def modified_sch_list(data,A,alpha,beta,x0,e0,e1,e2):
 
 
 print('HMD')
-aexp = float(os.path.basename(path_2_snapshot_data[0][:-5]).split('_')[1])
+aexp = float(os.path.basename(path_2_snapshot_data[0][:-8]).split('_')[1])
 z_snap = 1/aexp -1
 print('z=%.3g'%(z_snap))
 cosmo = cosmology.setCosmology('multidark-planck')    
@@ -181,17 +181,17 @@ ax4 = fig.add_subplot(gs[1,1],sharex=ax2)
 
 ax1.plot(bins_conc,model_pdf_conc,label='full sample')
 ax1.scatter(bins_conc,pdf_conc, ls ='None', marker='o',s=10)
-ax1.fill_between(bins_conc,pdf_conc0-yerr_conc0+0.3,pdf_conc0+yerr_conc0+0.3, label = r'$%.3g < M_\odot \leq %.3g$'%(mass_interval[0],mass_interval[1]), alpha=0.5)
+ax1.fill_between(bins_conc,pdf_conc0-yerr_conc0+0.3,pdf_conc0+yerr_conc0+0.3, label = r'$%.3g < M_\odot/h \leq %.3g$'%(mass_interval[0],mass_interval[1]), alpha=0.5)
 ax1.plot(bins_conc,modified_sch_list([bins_conc,sig_bins[0]],*popt_pdf_conc_list)+0.3)
-ax1.fill_between(bins_conc,pdf_conc1-yerr_conc1+0.2,pdf_conc1+yerr_conc1+0.2, label = r'$%.3g < M_\odot \leq %.3g$'%(mass_interval[1],mass_interval[2]), alpha=0.5)
+ax1.fill_between(bins_conc,pdf_conc1-yerr_conc1+0.2,pdf_conc1+yerr_conc1+0.2, label = r'$%.3g < M_\odot/h \leq %.3g$'%(mass_interval[1],mass_interval[2]), alpha=0.5)
 ax1.plot(bins_conc,modified_sch_list([bins_conc,sig_bins[1]],*popt_pdf_conc_list)+0.2)
-ax1.fill_between(bins_conc,pdf_conc2-yerr_conc2+0.1,pdf_conc2+yerr_conc2+0.1, label = r'$%.3g < M_\odot \leq %.3g$'%(mass_interval[2],mass_interval[3]), alpha=0.5)
+ax1.fill_between(bins_conc,pdf_conc2-yerr_conc2+0.1,pdf_conc2+yerr_conc2+0.1, label = r'$%.3g < M_\odot/h \leq %.3g$'%(mass_interval[2],mass_interval[3]), alpha=0.5)
 ax1.plot(bins_conc,modified_sch_list([bins_conc,sig_bins[2]],*popt_pdf_conc_list)+0.1)
-ax1.fill_between(bins_conc,pdf_conc3-yerr_conc3,pdf_conc3+yerr_conc3, label = r'$%.3g < M_\odot \leq %.3g$'%(mass_interval[3],mass_interval[4]), alpha=0.5)
+ax1.fill_between(bins_conc,pdf_conc3-yerr_conc3,pdf_conc3+yerr_conc3, label = r'$%.3g < M_\odot/h \leq %.3g$'%(mass_interval[3],mass_interval[4]), alpha=0.5)
 ax1.plot(bins_conc,modified_sch_list([bins_conc,sig_bins[3]],*popt_pdf_conc_list))
-ax1.fill_between(bins_conc,pdf_conc4-yerr_conc4-0.1,pdf_conc4+yerr_conc4-0.1, label = r'$%.3g < M_\odot \leq %.3g$'%(mass_interval[4],mass_interval[5]), alpha=0.5)
+ax1.fill_between(bins_conc,pdf_conc4-yerr_conc4-0.1,pdf_conc4+yerr_conc4-0.1, label = r'$%.3g < M_\odot/h \leq %.3g$'%(mass_interval[4],mass_interval[5]), alpha=0.5)
 ax1.plot(bins_conc,modified_sch_list([bins_conc,sig_bins[4]],*popt_pdf_conc_list)-0.1)
-ax1.fill_between(bins_conc,pdf_conc5-yerr_conc5-0.2,pdf_conc5+yerr_conc5-0.2, label = r'$%.3g < M_\odot \leq %.3g$'%(mass_interval[5],mass_interval[6]), alpha=0.5)
+ax1.fill_between(bins_conc,pdf_conc5-yerr_conc5-0.2,pdf_conc5+yerr_conc5-0.2, label = r'$%.3g < M_\odot/h \leq %.3g$'%(mass_interval[5],mass_interval[6]), alpha=0.5)
 ax1.plot(bins_conc,modified_sch_list([bins_conc,sig_bins[5]],*popt_pdf_conc_list)-0.2)
 ax1.set_ylim(bottom=-2.5,top=-1.2)
 ax1.tick_params(labelsize=12)
@@ -205,7 +205,7 @@ ax1.text(9,-1.4,'z = 0.00', fontsize=12, bbox=dict(facecolor='white'))
 
 ############################### z=0.5 ###############################################
 
-aexp = float(os.path.basename(path_2_snapshot_data[1][:-5]).split('_')[1])
+aexp = float(os.path.basename(path_2_snapshot_data[1][:-8]).split('_')[1])
 z_snap = 1/aexp -1
 print('z=%.3g'%(z_snap))
 cosmo = cosmology.setCosmology('multidark-planck')    
@@ -272,7 +272,7 @@ ax2.text(9,-1.4,'z = 0.52', fontsize=12, bbox=dict(facecolor='white'))
 
 ############################### z=1.03 ###############################################
 
-aexp = float(os.path.basename(path_2_snapshot_data[2][:-5]).split('_')[1])
+aexp = float(os.path.basename(path_2_snapshot_data[2][:-8]).split('_')[1])
 z_snap = 1/aexp -1
 print('z=%.3g'%(z_snap))
 cosmo = cosmology.setCosmology('multidark-planck')    
@@ -340,7 +340,7 @@ ax3.text(9,-1.4,'z = 1.03', fontsize=12, bbox=dict(facecolor='white'))
 
 ############################### z=1.43 ###############################################
 
-aexp = float(os.path.basename(path_2_snapshot_data[3][:-5]).split('_')[1])
+aexp = float(os.path.basename(path_2_snapshot_data[3][:-8]).split('_')[1])
 z_snap = 1/aexp -1
 print('z=%.3g'%(z_snap))
 cosmo = cosmology.setCosmology('multidark-planck')    

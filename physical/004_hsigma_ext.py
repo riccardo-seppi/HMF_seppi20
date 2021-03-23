@@ -61,16 +61,16 @@ path_2_snapshot_data = os.path.join(file_dir, 'distinct_1.0.fits')
 path_2_snapshot_data2_5 = '/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_1.0.fits'
 path_2_snapshot_data1_0 = '/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_1.0.fits'
 
-path_2_snapshot_data4_0_list = np.array(['/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_1.0.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.9567.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.8951.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.8192.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.7016.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.6565.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.5876.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.5622.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.4922.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.4123.fits'])
+path_2_snapshot_data4_0_list = np.array(['/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_1.0.fits.gz','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.9567.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.8951.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.8192.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.7016.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.6565.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.5876.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.5622.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.4922.fits','/data39s/simulation_2/MD/MD_4.0Gpc/Mass_Xoff_Concentration/distinct_0.4123.fits'])
 
-path_2_snapshot_data2_5_list = np.array(['/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_1.0.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.956.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.8953.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.8173.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.7003.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.6583.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.5864.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.5623.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.5.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.409.fits'])
+path_2_snapshot_data2_5_list = np.array(['/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_1.0.fits.gz','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.956.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.8953.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.8173.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.7003.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.6583.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.5864.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.5623.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.5.fits','/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration/distinct_0.409.fits'])
 
-path_2_snapshot_data1_0_list = np.array(['/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_1.0.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.9567.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.8951.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.8192.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.7016.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.6565.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.5876.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.5622.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.4922.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.4123.fits'])
+path_2_snapshot_data1_0_list = np.array(['/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_1.0.fits.gz','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.9567.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.8951.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.8192.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.7016.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.6565.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.5876.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.5622.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.4922.fits','/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration/distinct_0.4123.fits'])
 
 s_low_list_HMD = np.array([-0.08,-0.07,-0.06,-0.05,-0.015,0.01,0.04,0.065,0.11,0.18])
 s_low_list = np.array([-0.09,-0.07,-0.06,-0.05,-0.04,-0.03,-0.02,-0.01,0.00,0.01])
 index = 0
-aexp = float(os.path.basename(path_2_snapshot_data4_0_list[index][:-5]).split('_')[1])
+aexp = float(os.path.basename(path_2_snapshot_data4_0_list[index][:-8]).split('_')[1])
 z_snap = 1/aexp -1
 
 cosmo = cosmology.setCosmology('multidark-planck')    
@@ -776,7 +776,7 @@ plt.savefig(outfig_mass,overwrite=True)
 
 def Mass_sigma(x):
     r=cosmo.sigma(1/10**x,z=z_snap,inverse=True)
-    M=peaks.lagrangianM(r)/h
+    M=peaks.lagrangianM(r)#/h
     return np.log10(M)
 
 #plot multiplicity function f = integral g(sigma,xoff,lambda)dxoff dlambda
@@ -807,7 +807,7 @@ ax1_sec = ax1.twiny()
 xmin,xmax=ax1.get_xlim()
 ax1_sec.set_xlim((Mass_sigma(xmin),Mass_sigma(xmax)))
 ax1_sec.plot([],[])
-ax1_sec.set_xlabel(r'$\log_{10}M\ [M_{\odot}]$', fontsize=24, labelpad=15)
+ax1_sec.set_xlabel(r'$\log_{10}M\ [M_{\odot}/h]$', fontsize=24, labelpad=15)
 ax1_sec.tick_params(labelsize=24)
 ax1.set_ylim(bottom=-5)
 ax2.set_ylim(-0.05,0.05)

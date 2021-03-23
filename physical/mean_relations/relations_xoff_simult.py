@@ -58,14 +58,14 @@ this_dir='.'
 
 #plt.figure(figsize=(10,10))
 #path_2_snapshot_data = np.array(glob.glob(os.path.join(test_dir, 'distinct_*.fits')))
-path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits'),os.path.join(test_dir,'distinct_0.6565.fits'),os.path.join(test_dir,'distinct_0.4922.fits'),os.path.join(test_dir,'distinct_0.4123.fits')])
+path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits.gz'),os.path.join(test_dir,'distinct_0.6565.fits.gz'),os.path.join(test_dir,'distinct_0.4922.fits.gz'),os.path.join(test_dir,'distinct_0.4123.fits.gz')])
 
 dir_2_5 = '/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration'
 
-path_2_snapshot_data2_5 = np.array([os.path.join(dir_2_5,'distinct_1.0.fits'),os.path.join(dir_2_5,'distinct_0.6583.fits'),os.path.join(dir_2_5,'distinct_0.5.fits'),os.path.join(dir_2_5,'distinct_0.409.fits')])
+path_2_snapshot_data2_5 = np.array([os.path.join(dir_2_5,'distinct_1.0.fits.gz'),os.path.join(dir_2_5,'distinct_0.6583.fits.gz'),os.path.join(dir_2_5,'distinct_0.5.fits.gz'),os.path.join(dir_2_5,'distinct_0.409.fits.gz')])
 dir_1_0 = '/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration'
 
-path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits'),os.path.join(dir_1_0,'distinct_0.6565.fits'),os.path.join(dir_1_0,'distinct_0.4922.fits'),os.path.join(dir_1_0,'distinct_0.4123.fits')])
+path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits.gz'),os.path.join(dir_1_0,'distinct_0.6565.fits.gz'),os.path.join(dir_1_0,'distinct_0.4922.fits.gz'),os.path.join(dir_1_0,'distinct_0.4123.fits.gz')])
 
 dir_0_4 = '/data17s/darksim/simulation_3/MD/MD_0.4Gpc/Mass_Xoff_Concentration'
 path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits')
@@ -112,7 +112,7 @@ xoff_tot_full =[]
 for i, p2s in enumerate(path_2_snapshot_data):
     print('HMD')
     print(i,' of ', len(path_2_snapshot_data)) 
-    aexp = float(os.path.basename(p2s[:-5]).split('_')[1])
+    aexp = float(os.path.basename(p2s[:-8]).split('_')[1])
     z_snap = 1/aexp -1
     print('z=%.3g'%(z_snap))  
     E_z = cosmo.Ez(z=z_snap)
@@ -298,12 +298,12 @@ h=cosmo.Hz(z=0)/100
 dc0 = peaks.collapseOverdensity(z = 0)
 def Mass_peak(x):
     r=cosmo.sigma(dc0/x,z=0,inverse=True)
-    M=peaks.lagrangianM(r)/h
+    M=peaks.lagrangianM(r)#/h
     return np.log10(M)
 
 def peak_mass(x):
     M=10**x
-    r=peaks.lagrangianR(M*h)
+    r=peaks.lagrangianR(M)#*h)
     sigma=cosmo.sigma(r,z=0)
     nu=dc/sigma
     return nu
@@ -330,7 +330,7 @@ ax1_sec.set_xticklabels(mass_values)
 ax1.legend(fontsize=8,bbox_to_anchor=(-0.3, 1.16, 1.3, .3), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
 ax1.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=12)
 ax1.set_ylabel(r'$\log_{10}X_{off,P}$', fontsize=12)
-ax1_sec.set_xlabel(r'$\log_{10}$M [M$_{\odot}$]', fontsize=12)
+ax1_sec.set_xlabel(r'$\log_{10}$M [M$_{\odot}/h$]', fontsize=12)
 ax1_sec.tick_params(labelsize=12)
 ax1.tick_params(labelsize=12)
 ax1.grid(True)

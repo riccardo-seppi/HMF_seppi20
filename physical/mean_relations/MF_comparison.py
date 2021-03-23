@@ -42,7 +42,7 @@ this_dir='.'
 
 #plt.figure(figsize=(10,10))
 #path_2_snapshot_data = np.array(glob.glob(os.path.join(test_dir, 'distinct_*.fits')))
-path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits'),os.path.join(test_dir,'distinct_0.6565.fits'),os.path.join(test_dir,'distinct_0.4922.fits'),os.path.join(test_dir,'distinct_0.353.fits')])
+path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits.gz'),os.path.join(test_dir,'distinct_0.6565.fits.gz'),os.path.join(test_dir,'distinct_0.4922.fits.gz'),os.path.join(test_dir,'distinct_0.353.fits.gz')])
 
 dir_2_5 = '/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration'
 
@@ -57,7 +57,7 @@ zpl = np.array([1/1.0-1, 1/0.6565-1, 1/0.4922-1, 1/0.353-1])
 colors = ['b','r','c','m']
 print(colors[0])
 
-aexp = float(os.path.basename(path_2_snapshot_data[0][:-5]).split('_')[1])
+aexp = float(os.path.basename(path_2_snapshot_data[0][:-8]).split('_')[1])
 z_snap = 1/aexp -1
 print('z=%.3g'%(z_snap))
 cosmo = cosmology.setCosmology('multidark-planck')    
@@ -173,7 +173,7 @@ ratio_comp = (fsigma_tot-mf_comparat)/mf_comparat
 
 def Mass_sigma(x):
     r=cosmo.sigma(1/10**x,z=z_snap,inverse=True)
-    M=peaks.lagrangianM(r)/h
+    M=peaks.lagrangianM(r)#/h
     return np.log10(M)
 
 print('plotting...')
@@ -204,7 +204,7 @@ ax1_sec = ax1.twiny()
 xmin,xmax=ax1.get_xlim()
 ax1_sec.set_xlim((Mass_sigma(xmin),Mass_sigma(xmax)))
 ax1_sec.plot([],[])
-ax1_sec.set_xlabel(r'$\log_{10}M\ [M_{\odot}]$',labelpad=15,fontsize=12)
+ax1_sec.set_xlabel(r'$\log_{10}M\ [M_{\odot}/h]$',labelpad=15,fontsize=12)
 ax1.set_xticks([-0.1,0.0,0.1,0.2,0.3,0.4,0.5])
 ax1.tick_params(labelsize=12)
 ax1_sec.tick_params(labelsize=12)
