@@ -58,7 +58,7 @@ this_dir='.'
 
 #plt.figure(figsize=(10,10))
 #path_2_snapshot_data = np.array(glob.glob(os.path.join(test_dir, 'distinct_*.fits')))
-path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits'),os.path.join(test_dir,'distinct_0.6565.fits'),os.path.join(test_dir,'distinct_0.4922.fits'),os.path.join(test_dir,'distinct_0.4123.fits')])
+path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits.gz'),os.path.join(test_dir,'distinct_0.6565.fits.gz'),os.path.join(test_dir,'distinct_0.4922.fits.gz'),os.path.join(test_dir,'distinct_0.4123.fits.gz')])
 
 dir_2_5 = '/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration'
 
@@ -94,7 +94,7 @@ t = [t0,t1,t2,t3]
 fig,ax = plt.subplots(1,1,figsize=(4.5,4.5))
 print('HMD')
 for i, p2s in enumerate(path_2_snapshot_data):
-    aexp = float(os.path.basename(p2s[:-5]).split('_')[1])
+    aexp = float(os.path.basename(p2s[:-8]).split('_')[1])
     z_snap = 1/aexp -1
     print('z=%.3g'%(z_snap))
     cosmo = cosmology.setCosmology('multidark-planck')    
@@ -215,11 +215,11 @@ for i, p2s in enumerate(path_2_snapshot_data):
 ax.set_xscale('log')
 ax.set_ylim(bottom=-4.0,top=-1.0)
 ax.set_xlim(0.9e-3,0.7)
-ax.grid(True)
+#ax.grid(True)
 ax.tick_params(labelsize=12)
 ax.legend(fontsize=10)
-ax.set_xlabel(r'$X_{off}$',fontsize=12)
-ax.set_ylabel(r'$\log_{10}P(X_{off})$',fontsize=12)
+ax.set_xlabel(r'X$_{\rm off}$',fontsize=12)
+ax.set_ylabel(r'$\log_{10}$P(X$_{\rm off}$)',fontsize=12)
 fig.tight_layout()
 outpl = os.path.join(this_dir,'figures','pdf_xoff_HMD_all_z.png')
 os.makedirs(os.path.dirname(outpl), exist_ok=True)

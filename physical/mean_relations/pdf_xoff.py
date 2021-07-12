@@ -56,17 +56,17 @@ this_dir='.'
 
 #plt.figure(figsize=(10,10))
 #path_2_snapshot_data = np.array(glob.glob(os.path.join(test_dir, 'distinct_*.fits')))
-path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits'),os.path.join(test_dir,'distinct_0.6565.fits'),os.path.join(test_dir,'distinct_0.4922.fits'),os.path.join(test_dir,'distinct_0.4123.fits')])
+path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits.gz'),os.path.join(test_dir,'distinct_0.6565.fits.gz'),os.path.join(test_dir,'distinct_0.4922.fits.gz'),os.path.join(test_dir,'distinct_0.4123.fits.gz')])
 
 dir_2_5 = '/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration'
 
-path_2_snapshot_data2_5 = np.array([os.path.join(dir_2_5,'distinct_1.0.fits'),os.path.join(dir_2_5,'distinct_0.6583.fits'),os.path.join(dir_2_5,'distinct_0.5.fits'),os.path.join(dir_2_5,'distinct_0.409.fits')])
+path_2_snapshot_data2_5 = np.array([os.path.join(dir_2_5,'distinct_1.0.fits.gz'),os.path.join(dir_2_5,'distinct_0.6583.fits.gz'),os.path.join(dir_2_5,'distinct_0.5.fits.gz'),os.path.join(dir_2_5,'distinct_0.409.fits.gz')])
 dir_1_0 = '/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration'
 
-path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits'),os.path.join(dir_1_0,'distinct_0.6565.fits'),os.path.join(dir_1_0,'distinct_0.4922.fits'),os.path.join(dir_1_0,'distinct_0.409.fits')])
+path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits.gz'),os.path.join(dir_1_0,'distinct_0.6565.fits.gz'),os.path.join(dir_1_0,'distinct_0.4922.fits.gz'),os.path.join(dir_1_0,'distinct_0.409.fits.gz')])
 
 dir_0_4 = '/data17s/darksim/simulation_3/MD/MD_0.4Gpc/Mass_Xoff_Concentration'
-path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits')
+path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits.gz')
 
 zpl = np.array([1/1.0-1, 1/0.6565-1, 1/0.4922-1, 1/0.4123-1])
 colors = ['b','r','c','m']
@@ -94,7 +94,8 @@ def modified_sch_log0_list(data,A,alpha,beta,x0,e0):
 
 
 print('HMD')
-aexp = float(os.path.basename(path_2_snapshot_data[0][:-5]).split('_')[1])
+choose_snap = 3
+aexp = float(os.path.basename(path_2_snapshot_data[choose_snap][:-8]).split('_')[1])
 z_snap = 1/aexp -1
 print('z=%.3g'%(z_snap))
 cosmo = cosmology.setCosmology('multidark-planck')    
@@ -104,7 +105,7 @@ dc = peaks.collapseOverdensity(z = z_snap)
 rho_m = cosmo.rho_m(z=z_snap)*1e9
 h = cosmo.Hz(z=0)/100
 
-hd1 = fits.open(path_2_snapshot_data[0])
+hd1 = fits.open(path_2_snapshot_data[choose_snap])
 mass1=hd1[1].data['Mvir']
 logmass1 = np.log10(mass1)
 R_1 = peaks.lagrangianR(mass1)
@@ -121,12 +122,18 @@ conc1 = Rvir1/Rs1
 print('min = ',min(log1_sigf_1))
 print('max = ',max(log1_sigf_1))
 #sys.exit()
-print('computing spinparameter pdf...')
 
-log1sig_intervals = [-0.15, -0.11,-0.108,  -0.08,-0.078, -0.01,-0.008,  0.07,0.08, 0.20,0.24, 0.4]
-#log1sig_intervals = [-0.1, 0.08,0.095,  0.11,0.13, 0.14,0.17,  0.19,0.21, 0.22,0.3, 0.44]
-#log1sig_intervals = [-0.05, 0.13,0.15,  0.16,0.19, 0.2,0.23,  0.25,0.28, 0.29,0.35, 0.48]
-#log1sig_intervals = [0.1, 0.18,0.195,  0.2,0.22, 0.23,0.265, 0.27,0.3, 0.31,0.4, 0.52]
+if choose_snap == 0:
+    log1sig_intervals = [-0.15, -0.11,-0.108,  -0.08,-0.078, -0.01,-0.008,  0.07,0.08, 0.20,0.24, 0.4]
+elif choose_snap == 1:
+    log1sig_intervals = [-0.1, 0.08,0.095,  0.11,0.13, 0.14,0.17,  0.19,0.21, 0.22,0.3, 0.44]
+elif choose_snap == 2:
+    log1sig_intervals = [-0.05, 0.13,0.15,  0.16,0.19, 0.2,0.23,  0.25,0.28, 0.29,0.35, 0.48]
+elif choose_snap == 3:
+    log1sig_intervals = [0.1, 0.18,0.195,  0.2,0.22, 0.23,0.265, 0.27,0.3, 0.31,0.4, 0.52]
+else:
+    print('snapshot not valid\naborting...')
+    sys.exit()
 sig_intervals = 1/(10**np.array(log1sig_intervals))
 #sig_bins = (sig_intervals[1:] + sig_intervals[:-1])/2
 sig_bins = [(sig_intervals[0]+sig_intervals[1])/2, (sig_intervals[1]+sig_intervals[2])/2, (sig_intervals[3]+sig_intervals[4])/2, (sig_intervals[5]+sig_intervals[6])/2, (sig_intervals[7]+sig_intervals[8])/2, (sig_intervals[9]+sig_intervals[10])/2] 
@@ -298,17 +305,17 @@ tab_sch_xoff_list.write(outschx_list,overwrite=True)
 #plt.savefig(outpl, overwrite=True)
 
 plt.figure(figsize=(4.5,5.5))
-plt.scatter(bins_final_xoff-0.6,pdf_xoff0+0.6,label=r'$M_\odot \leq %.3g$'%(M_intervals[1]),marker='o',ls='None',s=15)
+plt.scatter(bins_final_xoff-0.6,pdf_xoff0+0.6,label=r'M$_\odot \leq$%.3g'%(M_intervals[1]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff-0.6,modified_sch_log0_list([bins_final_xoff,sig_bins[0]],*popt_pdf_xoff_list)+0.6)
-plt.scatter(bins_final_xoff-0.4,pdf_xoff1+0.4,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[1],M_intervals[2]),marker='o',ls='None',s=15)
+plt.scatter(bins_final_xoff-0.4,pdf_xoff1+0.4,label=r'%.3g < M$_\odot \leq$%.3g'%(M_intervals[1],M_intervals[2]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff-0.4,modified_sch_log0_list([bins_final_xoff,sig_bins[1]],*popt_pdf_xoff_list)+0.4)
-plt.scatter(bins_final_xoff-0.2,pdf_xoff2+0.2,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[3],M_intervals[4]),marker='o',ls='None',s=15)
+plt.scatter(bins_final_xoff-0.2,pdf_xoff2+0.2,label=r'%.3g < M$_\odot \leq$%.3g'%(M_intervals[3],M_intervals[4]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff-0.2,modified_sch_log0_list([bins_final_xoff,sig_bins[2]],*popt_pdf_xoff_list)+0.2)
-plt.scatter(bins_final_xoff,pdf_xoff3,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[5],M_intervals[6]),marker='o',ls='None',s=15)
+plt.scatter(bins_final_xoff,pdf_xoff3,label=r'%.3g < M$_\odot \leq$%.3g'%(M_intervals[5],M_intervals[6]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff,modified_sch_log0_list([bins_final_xoff,sig_bins[3]],*popt_pdf_xoff_list))
-plt.scatter(bins_final_xoff+0.2,pdf_xoff4-0.2,label=r'$%.3g < M_\odot \leq %.3g$'%(M_intervals[7],M_intervals[8]),marker='o',ls='None',s=15)
+plt.scatter(bins_final_xoff+0.2,pdf_xoff4-0.2,label=r'%.3g < M$_\odot \leq$ %.3g'%(M_intervals[7],M_intervals[8]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff+0.2,modified_sch_log0_list([bins_final_xoff,sig_bins[4]],*popt_pdf_xoff_list)-0.2)
-plt.scatter(bins_final_xoff+0.4,pdf_xoff5-0.4,label=r'$M_\odot > %.3g$'%(M_intervals[9]),marker='o',ls='None',s=15)
+plt.scatter(bins_final_xoff+0.4,pdf_xoff5-0.4,label=r'M$_\odot$ > %.3g'%(M_intervals[9]),marker='o',ls='None',s=15)
 plt.plot(bins_final_xoff+0.4,modified_sch_log0_list([bins_final_xoff,sig_bins[5]],*popt_pdf_xoff_list)-0.4)
 #plt.plot(bins_final_xoff,modified_sch_log0(bins_final_xoff,-5,4.,0.4,0.4),label='check')
 #plt.xscale('log')
@@ -316,11 +323,11 @@ plt.plot(bins_final_xoff+0.4,modified_sch_log0_list([bins_final_xoff,sig_bins[5]
 plt.xlim(0,3.1)
 plt.ylim(bottom=-5,top=-0.5)
 plt.tick_params(labelsize=12)
-plt.grid(True)
+#plt.grid(True)
 plt.legend(fontsize=8,bbox_to_anchor=(-0.2, 1.1, 1.2, .3), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
-plt.xlabel(r'$\log_{10}X_{off,P} + C_1$',fontsize=12)
-plt.ylabel(r'$\log_{10}P(X_{off,P}) + C_0$',fontsize=12)
-plt.title('z = 0.00', fontsize=12)
+plt.xlabel(r'$\log_{10}$X$_{\rm off,P}$ + C$_1$',fontsize=12)
+plt.ylabel(r'$\log_{10}$P(X$_{\rm off,P}$) + C$_0$',fontsize=12)
+plt.title('z = %.2f'%z_snap, fontsize=12)
 plt.tight_layout()
 outpl = os.path.join(this_dir,'figures','pdf_xoff_HMD_slices_z_%.3g.png'%(z_snap))
 os.makedirs(os.path.dirname(outpl), exist_ok=True)

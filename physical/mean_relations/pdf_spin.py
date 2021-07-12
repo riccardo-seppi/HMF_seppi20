@@ -56,17 +56,17 @@ this_dir='.'
 
 #plt.figure(figsize=(10,10))
 #path_2_snapshot_data = np.array(glob.glob(os.path.join(test_dir, 'distinct_*.fits')))
-path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits'),os.path.join(test_dir,'distinct_0.6565.fits'),os.path.join(test_dir,'distinct_0.4922.fits'),os.path.join(test_dir,'distinct_0.4123.fits')])
+path_2_snapshot_data = np.array([os.path.join(test_dir, 'distinct_1.0.fits.gz'),os.path.join(test_dir,'distinct_0.6565.fits.gz'),os.path.join(test_dir,'distinct_0.4922.fits.gz'),os.path.join(test_dir,'distinct_0.4123.fits.gz')])
 
 dir_2_5 = '/data39s/simulation_2/MD/MD_2.5Gpc/Mass_Xoff_Concentration'
 
-path_2_snapshot_data2_5 = np.array([os.path.join(dir_2_5,'distinct_1.0.fits'),os.path.join(dir_2_5,'distinct_0.6583.fits'),os.path.join(dir_2_5,'distinct_0.5.fits'),os.path.join(dir_2_5,'distinct_0.409.fits')])
+path_2_snapshot_data2_5 = np.array([os.path.join(dir_2_5,'distinct_1.0.fits.gz'),os.path.join(dir_2_5,'distinct_0.6583.fits.gz'),os.path.join(dir_2_5,'distinct_0.5.fits.gz'),os.path.join(dir_2_5,'distinct_0.409.fits.gz')])
 dir_1_0 = '/data37s/simulation_1/MD/MD_1.0Gpc/Mass_Xoff_Concentration'
 
-path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits'),os.path.join(dir_1_0,'distinct_0.6565.fits'),os.path.join(dir_1_0,'distinct_0.4922.fits'),os.path.join(dir_1_0,'distinct_0.409.fits')])
+path_2_snapshot_data1_0 = np.array([os.path.join(dir_1_0,'distinct_1.0.fits.gz'),os.path.join(dir_1_0,'distinct_0.6565.fits.gz'),os.path.join(dir_1_0,'distinct_0.4922.fits.gz'),os.path.join(dir_1_0,'distinct_0.409.fits.gz')])
 
 dir_0_4 = '/data17s/darksim/simulation_3/MD/MD_0.4Gpc/Mass_Xoff_Concentration'
-path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits')
+path_2_snapshot_data0_4 = os.path.join(dir_0_4,'distinct_1.0.fits.gz')
 zpl = np.array([1/1.0-1, 1/0.6565-1, 1/0.4922-1, 1/0.4123-1])
 colors = ['b','r','c','m']
 
@@ -86,7 +86,7 @@ t = [t0,t1,t2,t3]
 fig,ax = plt.subplots(1,1,figsize=(4.5,4.5))
 print('HMD')
 for i, p2s in enumerate(path_2_snapshot_data):
-    aexp = float(os.path.basename(p2s[:-5]).split('_')[1])
+    aexp = float(os.path.basename(p2s[:-8]).split('_')[1])
     z_snap = 1/aexp -1
     print('z=%.3g'%(z_snap))
     cosmo = cosmology.setCosmology('multidark-planck')    
@@ -154,11 +154,11 @@ for i, p2s in enumerate(path_2_snapshot_data):
     
 ax.set_xscale('log')
 ax.set_ylim(bottom=-3,top=0.5)
-ax.grid(True)
+#ax.grid(True)
 ax.tick_params(labelsize=12)
 ax.legend(fontsize=10)
 ax.set_xlabel(r'$\lambda$',fontsize=12)
-ax.set_ylabel(r'$\log_{10}P(\lambda)$',fontsize=12)
+ax.set_ylabel(r'$\log_{10}$P($\lambda$)',fontsize=12)
 plt.tight_layout()
 outpl = os.path.join(this_dir,'figures','pdf_spinpar_HMD_all_z.png')
 os.makedirs(os.path.dirname(outpl), exist_ok=True)

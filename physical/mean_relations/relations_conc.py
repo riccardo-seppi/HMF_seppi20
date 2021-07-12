@@ -320,9 +320,9 @@ def peak_mass(x):
     nu=dc/sigma
     return nu
 
-ax0.set_ylabel(r'$conc$', fontsize=12)
+ax0.set_ylabel(r'conc', fontsize=12)
 ax0.set_xlabel(r'$\nu = \delta_c/\sigma$', fontsize=12)
-ax0.grid(True)
+#ax0.grid(True)
 ax0.set_xlim(left=0.8)
 ax0.set_xscale('log')
 ax0.set_yscale('log')
@@ -357,7 +357,7 @@ ax0_sec.set_xticklabels(mass_values)
 
 ax0.legend(fontsize=8,bbox_to_anchor=(-0.2, 1.16, 1.2, .3), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
 ax0.tick_params(labelsize=12)
-ax0_sec.set_xlabel(r'$\log_{10}$M [M$_{\odot}/h$]', fontsize=12)
+ax0_sec.set_xlabel(r'$\log_{10}$M [M$_{\odot}$/h]', fontsize=12)
 ax0_sec.tick_params(labelsize=12)
 fig0.tight_layout()
 outfi0 = os.path.join(this_dir,'figures','relation_c_sigma.png')
