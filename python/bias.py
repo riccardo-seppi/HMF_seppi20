@@ -40,6 +40,23 @@ for Mdef in Mdefs:
 	plt.tick_params(labelsize=13)
 	plt.grid(True)
 	plt.tight_layout()
+	plt.savefig(outfig) 
+	
+	outfig = os.path.join('/home/rseppi/HMF_seppi20','figures','bias_'+Mdef+'_Msun.png')
+	plt.figure(figsize=(6,6))
+
+	for z_ in z:
+    		b = bias.haloBias(M, model = 'tinker10', z = z_, mdef = Mdef)
+    		plt.plot(M/h,b, label='z={:.1f}'.format(z_))
+
+	plt.xlabel(r'M'+Mdef+' [M$_\odot$]', fontsize=13)
+	plt.ylabel('b', fontsize=13)
+	plt.xscale('log')
+	plt.ylim(0,6)
+	plt.legend(fontsize=13)
+	plt.tick_params(labelsize=13)
+	plt.grid(True)
+	plt.tight_layout()
 	plt.savefig(outfig)    
 
 
